@@ -1,0 +1,869 @@
+<div class="c-content-wrap">
+  <div class="half-block">
+    <div class="c-title">
+      {{ "collectDetail.info" | translate }}
+      <button
+        *ngIf="para.orderStatus != 4 && para.orderStatus != 6 && para.orderStatus != 9 && para.orderStatus != 10"
+        style="margin-left:20px"
+        nz-button
+        nzType="primary"
+        (click)="addextendFn()"
+      >
+        {{"collectDetail.extension" | translate}}
+      </button>
+    </div>
+    <div style="display: flex;">
+      <div style="width:160px;height: 500px;border-bottom: 1px solid #e8e8e8;flex-shrink:0;">
+        <nz-list [nzDataSource]="navLeft" nzBordered [nzRenderItem]="item">
+          <ng-template #item let-item><nz-list-item [nzContent]="item.content" class="list-item" (click)="goAnchor(item.id)"></nz-list-item></ng-template>
+        </nz-list>
+      </div>
+      <div class="area-section">
+        <div id="qqq">
+          <div class="c-title">{{"collectDetail.loanOrderDetails.title" | translate}}</div>
+
+          <nz-table [nzData]="[{}]" [nzShowPagination]="false" nzBordered>
+            <thead><tr><th colspan="2">{{"collectDetail.loanOrderDetails.title" | translate}}</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.creditOrderNo' | translate }}</td>
+                <td>{{ orderDetail['creditOrderNo'] || 'no' }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.orderNo' | translate }}</td>
+                <td>{{ orderDetail['orderNo'] || 'no' }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.stringCreateTime' | translate }}</td>
+                <td>{{ orderDetail['stringCreateTime'] || 'no' }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.orderType' | translate }}</td>
+                <td>{{ productInfo["loanProductType"] ? ('loanOrderDetails.orderType' | translate)[productInfo["loanProductType"]+""] : 'no' }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.loanProductName' | translate }}</td>
+                <td>{{ productInfo["loanProductName"] || 'no' }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.lendRate' | translate }}</td>
+                <td>
+                  {{ productInfo['loanDayRate'] ? (productInfo['loanDayRate']*100).toFixed(2) + '%' : 'no' }}
+                </td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.auditRate' | translate }}</td>
+                <td>
+                  {{productInfo['auditRate'] ? (productInfo['auditRate']*100).toFixed(2) + '%' : 'no' }}
+                </td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.technologyRate' | translate }}</td>
+                <td>
+                  {{productInfo['technologyRate'] ? (productInfo['technologyRate']*100).toFixed(2) + '%' : 'no' }}
+                </td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.gracePeriod' | translate }}</td>
+                <td>{{ productInfo['gracePeriod'] || "no" }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.gracePeriodDayRate' | translate }}</td>
+                <td>
+                  {{productInfo['gracePeriodDayRate'] ? (productInfo['gracePeriodDayRate']*100).toFixed(2) + '%' : 'no' }}
+                </td>
+              </tr>
+
+              <tr>
+                <td>{{ 'loanOrderDetails.list.overdueDayRate' | translate }}</td>
+                <td>
+                  {{productInfo['overdueDayRate'] ? (productInfo['overdueDayRate']*100).toFixed(2) + '%' : 'no' }}
+                </td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.payDate' | translate }}</td>
+                <td>{{ orderDetail['stringCreateTime'] || 'no' }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.auditMoney' | translate }}</td>
+                <td>{{ orderDetail['applyMoney'] || 'no'}}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.loanDays' | translate }}</td>
+                <td>{{ orderDetail['loanDays'] || "no"}}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.monthAuditCharge' | translate }}</td>
+                <td>{{ orderDetail['monthAuditCharge'] || "no" }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.monthTechnologyCharge' | translate }}</td>
+                <td>{{ orderDetail['monthTechnologyCharge'] || "no" }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.lendRateMoney' | translate }}</td>
+                <td>{{ orderDetail['lendRateMoney'] || "no"}}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.currentRepay' | translate }}</td>
+                <td>{{ (orderDetail['applyMoney']+orderDetail['lendRateMoney']).toFixed(2) || "no"}}</td>
+              </tr>
+              <!--优惠券-->
+              <tr>
+                <td>{{ 'loanOrderDetails.list.couponMoney' | translate }}</td>
+                <td>no</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.dueDays' | translate }}</td>
+                <td>{{repaymentDetail && repaymentDetail[0] && repaymentDetail[0]['dueDays'] ? repaymentDetail[0]['dueDays'] : "no" }}</td>
+              </tr>
+
+              <tr>
+                <td>{{ 'loanOrderDetails.list.overDueRateMoney' | translate }}</td>
+                <td>{{ orderDetail['overDueRateMoney'] || "no" }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.currentRealRepay' | translate }}</td>
+                <td>
+                  {{ orderDetail['currentRealRepay'] || "no" }}
+                </td>
+
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.planRepaymentDate' | translate }}</td>
+                <td>{{ repaymentDetail && repaymentDetail[0] && repaymentDetail[0]['planRepaymentDateStr'] ? repaymentDetail[0]['planRepaymentDateStr'] :  "no" }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.realRepayMoney' | translate }}</td>
+                <td>{{ repaymentDetail && repaymentDetail[0] && repaymentDetail[0]['realRepayMoney'] ? repaymentDetail[0]['realRepayMoney'] :  "no" }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.realRepaymentDate' | translate }}</td>
+                <td>{{ repaymentDetail && repaymentDetail[0] && repaymentDetail[0]['realRepaymentDateStr'] ? repaymentDetail[0]['realRepaymentDateStr'] : "no" }}</td>
+              </tr>
+              <tr>
+                <td>{{ 'loanOrderDetails.list.status' | translate }}</td>
+                <td>{{ ('loanOrderDetails.status' | translate)[orderDetail['status']] || "no" }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table [nzData]="[{}]" [nzShowPagination]="false" nzBordered>
+            <thead><tr><th colspan="2">{{"collectDetail.withdrawalAccount" | translate}}</th></tr></thead>
+            <tbody>
+              <tr><td style="width:50%">{{"collectDetail.bank" | translate}}</td><td>{{account.bankName}}</td></tr>
+              <tr><td style="width:50%">{{"collectDetail.InstitutionNo" | translate}}</td><td>{{account.institutionNumber}}</td></tr>
+              <tr><td style="width:50%">{{"collectDetail.accountType" | translate}}</td><td>{{account.accountType}}</td></tr>
+              <tr><td style="width:50%">{{"collectDetail.accountNo" | translate}}</td><td>{{account.accountNumber}}</td></tr>
+              <tr><td style="width:50%">{{"collectDetail.accountCode" | translate}}</td><td>{{account.accountCode}}</td></tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table [nzData]="paymentDetail" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr><th colspan="8">{{ "collectDetail.loanDetails" | translate}}</th></tr>
+              <tr>
+                <th>{{ "collectDetail.serialNumber" | translate}}</th>
+                <th>{{ "collectDetail.createTime" | translate}}</th>
+                <th>{{ "collectDetail.flowType" | translate}}</th>
+                <th>{{ "collectDetail.amount" | translate}}</th>
+                <th>{{ "collectDetail.operationResult" | translate}}</th>
+                <th>{{ "collectDetail.operatingTime" | translate}}</th>
+                <th>{{ "collectDetail.operator" | translate}}</th>
+                <th>{{ "collectDetail.remarks" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of paymentDetail">
+                <td>{{data.payCode}}</td>
+                <td>{{data.createTime}}</td>
+                <td>{{ data.paymentType == '1' ? ('collectDetail.electronicTransfer' | translate) : 'BBVA' }}</td>
+                <td>{{data.payMoney}}</td>
+                <td>{{data.paymentResult}}</td>
+                <td>{{data.modifyTime}}</td>
+                <td>{{data.operator}}</td>
+                <td>{{data.option}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table [nzData]="repaymentDetail" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr><th colspan="9">{{ "collectDetail.repaymentDetails" | translate}}</th></tr>
+              <tr *ngIf="true">
+                <th>{{ "collectDetail.period" | translate}}</th>
+                <th>{{ "collectDetail.loanAmount" | translate}}</th>
+                <th>{{ "collectDetail.actualShouldTotal" | translate}}</th>
+                <th>{{ "collectDetail.financingAmount" | translate}}</th>
+                <th>{{ "collectDetail.interest" | translate}}</th>
+                <th>{{ "collectDetail.penaltyInterest" | translate}}</th>
+                <th>{{ "collectDetail.actualRepaymentAmount" | translate}}</th>
+                <th>{{ "collectDetail.orderStatus" | translate}}</th><!-- <th>Boleto管理</th> -->
+              </tr>
+            </thead>
+            <tbody *ngIf="true">
+              <tr *ngFor="let data of repaymentDetail">
+                <td>{{data.totalPeriod}}</td>
+                <td>{{data.payMoney}}</td>
+                <td>{{data.currentRepay}}</td>
+                <td><!-- {{  }} --></td>
+                <td>{{data.interestMoney}}</td>
+                <td><!-- {{  }} --></td>
+                <td>{{data.realRepayMoney}}</td>
+                <td>{{data.status | OrderStatusPipe}}</td>
+                <td><!-- {{  }} --></td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table [nzData]="repaymentDetail" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr>
+                <th>{{ "collectDetail.period" | translate}}</th>
+                <th>{{ "collectDetail.serialNumber" | translate}}</th>
+                <th>{{ "collectDetail.createTime" | translate}}</th>
+                <th>{{ "collectDetail.flowType" | translate}}</th>
+                <th>{{ "collectDetail.amount" | translate}}</th>
+                <th>{{ "collectDetail.operationResult" | translate}}</th>
+                <th>{{ "collectDetail.operatingTime" | translate}}</th>
+                <th>{{ "collectDetail.operator" | translate}}</th>
+                <th>{{ "collectDetail.remarks" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of repaymentDetail">
+                <td><!-- {{  }} --></td>
+                <td><!-- {{  }} --></td>
+                <td><!-- {{  }} --></td>
+                <td><!-- {{  }} --></td>
+                <td><!-- {{  }} --></td>
+                <td><!-- {{  }} --></td>
+                <td><!-- {{  }} --></td>
+                <td><!-- {{  }} --></td>
+                <td><!-- {{  }} --></td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+        </div>
+        <div id="sss">
+          <div class="c-title">
+            {{ "collectDetail.reviewDetails" | translate}}
+            <button
+              style="margin-left:20px"
+              nz-button
+              nzType="primary"
+              (click)="refresh()"
+            >
+            {{ "collectDetail.returnReview" | translate}}
+            </button>
+          </div>
+          <nz-table [nzData]="[{}]" [nzShowPagination]="false" nzBordered>
+            <thead><tr><th colspan="2">{{ "collectDetail.reviewOrderInfo" | translate}}</th></tr></thead>
+            <tbody>
+              <tr><td style="width:50%">{{ "collectDetail.review.number" | translate}}</td><td>{{creditDetail.creditOrderNo}}</td></tr>
+              <tr><td style="width:50%">{{ "collectDetail.review.createTime" | translate}}</td><td>{{creditDetail.creditCreateTime}}</td></tr>
+              <tr><td style="width:50%">{{ "collectDetail.review.orderStatus" | translate}}</td><td>{{creditDetail.creditCreateStatus | reviewOrder}}</td></tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table [nzData]="[{}]" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr><th colspan="4">{{ "collectDetail.associatedInfo" | translate}}</th></tr>
+              <tr><th>{{ "collectDetail.logTime" | translate}}</th>
+                <th>{{ "collectDetail.latitudeLongitude" | translate}}</th>
+                <th>{{ "collectDetail.IP" | translate}}</th>
+                <th>{{ "collectDetail.deviceNo" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{creditDetail.lastLoginTimeStr}}</td>
+                <td>{{creditDetail.longitude}} , {{creditDetail.latitude}}</td>
+                <td>{{creditDetail.ipAddress}}</td>
+                <td>{{creditDetail.deviceId}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table [nzData]="[{}]" [nzShowPagination]="false" nzBordered>
+            <thead><tr><th colspan="9">{{ "collectDetail.personalInfo" | translate}}</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>{{ "collectDetail.name" | translate}}</td>
+                <td>{{ "collectDetail.gender" | translate}}</td>
+                <td>{{ "collectDetail.birthDate" | translate}}</td>
+                <td>{{ "collectDetail.age" | translate}}</td>
+                <td>{{ "collectDetail.birthPlace" | translate}}</td>
+                <td>{{ "collectDetail.education" | translate}}</td>
+                <td>{{ "collectDetail.marriage" | translate}}</td>
+                <td>{{ "collectDetail.fatherName" | translate}}</td>
+                <td>{{ "collectDetail.motherName" | translate}}</td>
+              </tr>
+              <tr>
+                <td>{{userInfo.username}}</td>
+                <td>{{userInfo.gender == 1 ? ("collectDetail.male" | translate) : ("collectDetail.female" | translate)}}</td><td>{{userInfo.birthdayStr}}</td><td>{{userInfo.age}}</td><td>{{userInfo.birthplace}}</td>
+                <td>{{userInfo.educationBackground}}</td><td>{{userInfo.maritalStatus}}</td><td>{{userInfo.fatherName}}</td><td>{{userInfo.motherName}}</td>
+              <!-- </tr><tr>
+                <td>BRXS20181106</td>
+                <td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td>
+                <td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td> -->
+              </tr><tr>
+                <td>{{ "collectDetail.home.member" | translate}}</td>
+                <td>{{ "collectDetail.home.telephone" | translate}}</td>
+                <td>{{ "collectDetail.home.address" | translate}}</td>
+                <td>{{ "collectDetail.home.zipCode" | translate}}</td>
+                <td>{{ "collectDetail.home.type" | translate}}</td>
+                <td>{{ "collectDetail.home.prove" | translate}}</td>
+                <td>{{ "collectDetail.home.email" | translate}}</td>
+                <td>{{ "collectDetail.home.phone" | translate}}</td>
+                <td> </td>
+              </tr><tr>
+                <td><!-- 当前家庭成员人数 --></td>
+                <td>{{userInfo.homeTelephone}}</td><td>{{userInfo.currentResidential}}</td><td>{{userInfo.residentialPostcode}}</td><td><!-- 当前住宅类型 --></td>
+                <td><!-- 当前住宅证明 --></td><td>{{userInfo.email}}</td><td>{{userInfo.phoneNumber}}</td><td> </td>
+              <!-- </tr><tr>
+                <td>BRXS20181106</td>
+                <td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td>
+                <td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td> -->
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table [nzData]="[{}]" [nzShowPagination]="false" nzBordered>
+            <thead><tr><th colspan="3">{{ "collectDetail.userRealName" | translate}}</th></tr></thead>
+            <tbody>
+              <tr>
+                <td style="width: 50%;">{{ "collectDetail.userRealNameInfo.positive" | translate}}</td>
+                <td colspan="2">{{ "collectDetail.userRealNameInfo.negative" | translate}}</td>
+              </tr><tr>
+                <td>{{userAuth.front}}</td>
+                <td colspan="2">{{userAuth.reverse}}</td>
+              </tr><tr>
+                <td>{{ "collectDetail.userRealNameInfo.photo" | translate}}</td>
+                <td>{{ "collectDetail.userRealNameInfo.similarity" | translate}}</td>
+                <td>{{userAuth.resultRef1Confidence}}</td>
+              </tr><tr>
+                <td rowspan="4">{{userAuth.imageBest}}</td>
+                <td>{{ "collectDetail.userRealNameInfo.thousand" | translate}}</td><td>{{userAuth.resultRef11e3}}</td>
+              </tr><tr>
+                <td>{{ "collectDetail.userRealNameInfo.tenThousand" | translate}}</td>
+                <td>{{userAuth.resultRef11e4}}</td>
+              </tr><tr>
+                <td>{{ "collectDetail.userRealNameInfo.oneHundredThousand" | translate}}</td>
+                <td>{{userAuth.resultRef11e5}}</td>
+              </tr><tr>
+                <td>{{ "collectDetail.userRealNameInfo.million" | translate}}</td>
+                <td>{{userAuth.resultRef11e6}}</td>
+              </tr><tr>
+                <td>{{ "collectDetail.userRealNameInfo.income" | translate}}</td>
+                <td colspan="2">{{ "collectDetail.userRealNameInfo.live" | translate}}</td>
+              </tr><tr>
+                <td><img class="c-img-res img-info" [src]="userAuth.incomeProof" alt=""  data-magnify="gallery" [attr.data-src]="userAuth.incomeProof"></td>
+                <td colspan="2"><!-- 居住证明 --></td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <!-- <nz-table [nzData]="[{}]" [nzShowPagination]="false" nzBordered>
+            <thead><tr><th colspan="5">工作信息</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>收入来源</td><td>社会身份</td><td>月收入</td><td>发薪方式</td><td>发薪日期</td>
+              </tr><tr>
+                <td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td>
+              </tr><tr>
+                <td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td>
+              </tr><tr>
+                <td>公司名称</td><td>职位</td><td>公司地址</td><td>公司邮编</td><td>收入证明</td>
+              </tr><tr>
+                <td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td>
+              </tr><tr>
+                <td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td><td>BRXS20181106</td>
+              </tr>
+            </tbody>
+          </nz-table> -->
+          <br/>
+          <nz-table [nzData]="creditOrderHistory" [nzShowPagination]="false" nzBordered
+          [nzScroll]="{ x:'160%'}">
+            <thead>
+              <tr><th colspan="12">{{ "collectDetail.reviewHistory" | translate}}</th></tr>
+              <tr>
+                <th>{{ "collectDetail.reviewHistoryInfo.orderNo" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.loanDate" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.phone" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.userLevel" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.amount" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.theTerm" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.validityPeriod" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.effectiveDate" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.maturityDate" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.admin" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.opinion" | translate}}</th>
+                <th>{{ "collectDetail.reviewHistoryInfo.orderStatus" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of creditOrderHistory">
+                <td>{{data.creditOrderNo}}</td>
+                <td>{{data.applyDate | dateFormat}}</td>
+                <td>{{data.userPhone}}</td>
+                <td>{{data.userGrade}}</td>
+                <td><!-- 审批额度 --></td>
+                <td><!-- 审批期限 --></td>
+                <td>{{data.approveDays}}</td>
+                <td>{{data.approveEffectDay | dateFormat}}</td>
+                <td>{{data.approveExpDay | dateFormat}}</td>
+                <td>{{data.adminName}}</td>
+                <td>{{data.creditIdea}}</td>
+                <td>{{data.status | OrderStatusPipe}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table #groupingTable
+            [nzWidthConfig]="['100px','100px','100px','100px','100px','100px','100px','100px','100px','100px','100px','100px']"
+            [nzData]="orderHistory" [nzShowPagination]="false" nzBordered
+            [nzScroll]="{ x:'160%'}">
+            <thead>
+              <tr><th colspan="12">{{ "collectDetail.loanOrderHistory" | translate}}</th></tr>
+              <tr>
+                <th>{{"collectDetail.loanOrderHistoryInfo.orderNo" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.loanorderNo" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.type" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.createTime" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.auditMoney" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.loanTerm" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.period" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.currentRealRepay" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.shouldRepayDay" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.admin" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.opinion" | translate}}</th>
+                <th>{{"collectDetail.loanOrderHistoryInfo.orderStatus" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of orderHistory">
+                <td>{{data.creditOrderNo}}</td>
+                <td>{{data.orderNo}}</td>
+                <td>{{data.orderTypeDesc}}</td>
+                <td>{{data.stringCreateTime}}</td>
+                <td>{{data.auditMoney}}</td>
+                <td>{{data.loanDays}}</td>
+                <td>{{data.applyMonth}}</td>
+                <td>{{data.currentRealRepay}}</td>
+                <td><!-- 应还日期 --></td>
+                <td>{{data.auditEmployeeName}}</td>
+                <td><!-- 信审意见 --></td>
+                <td>{{data.status | OrderStatusPipe}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <!-- <nz-table [nzData]="spcScore" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr><th colspan="4">征信查询信息</th></tr>
+              <tr>
+                <th>征信查询号码</th><th>征信登记地址</th><th>征信登记日期</th><th>征信更新时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of spcScore">
+                <td>{{data.adminName}}</td>
+                <td>{{data.adminName}}</td>
+                <td>{{data.adminName}}</td>
+                <td>{{data.adminName}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table [nzData]="loanDetail" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr><th colspan="7">征信贷款订单汇总</th></tr>
+              <tr>
+                <th>还款信息</th><th>产品</th><th>机构</th><th>借款金额</th><th>借款期数</th><th>当前还款</th><th>当前逾期金额</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of loanDetail">
+                <td>{{data.adminName}}</td>
+                <td>{{data.applyDateStr}}</td>
+                <td>{{data.status}}</td>
+                <td>{{data.adminId}}</td>
+                <td>{{data.applyDateStr}}</td>
+                <td>{{data.status}}</td>
+                <td>{{data.adminId}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+          <nz-table [nzData]="loanDetail" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr><th colspan="4">征信访问记录</th></tr>
+              <tr>
+                <th>访问日期</th><th>机构</th><th>城市</th><th>访问来源</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of loanDetail">
+                <td>{{data.adminName}}</td>
+                <td>{{data.applyDateStr}}</td>
+                <td>{{data.status}}</td>
+                <td>{{data.adminId}}</td>
+              </tr>
+            </tbody>
+          </nz-table> -->
+          <br/>
+          <nz-table [nzData]="spcScore" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr><th colspan="3">{{ "collectDetail.creditRating" | translate}}</th></tr>
+              <tr>
+                <th>{{ "collectDetail.fraction" | translate}}</th>
+                <th>{{ "collectDetail.grade" | translate}}</th>
+                <th>{{ "collectDetail.description" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of spcScore">
+                <td>{{data.score}}</td>
+                <td>{{data.classe}}</td>
+                <td>{{data.mesagemInterpretativaScore}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+        </div>
+        <div id="aaa">
+          <div class="c-title">{{ "collectDetail.friendInfo" | translate}}</div>
+          <nz-table [nzData]="contact" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr>
+                <th>{{ "collectDetail.name" | translate}}</th>
+                <th>{{ "collectDetail.relationship" | translate}}</th>
+                <th>{{ "collectDetail.contactInfo" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of contact; let i = index">
+                <td [innerHTML]="contact[i].contactName"></td>
+                <td>{{data.relation}}</td>
+                <td>{{data.contactPhone}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+        </div>
+        <div id="eee">
+          <div class="c-title">{{ "collectDetail.smsRecord" | translate}}</div>
+          <p>{{ "collectDetail.tip" | translate}}</p>
+          <button nz-button nzType="primary" (click)="changeColor(1)">{{ "collectDetail.loan" | translate}}</button>
+          <button nz-button nzType="primary" (click)="changeColor(2)" style="margin-left:15px;">{{ "collectDetail.returnMoney" | translate}}</button>
+          <nz-table [nzData]="msgLogList" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr>
+                <th>{{ "collectDetail.name" | translate}}</th>
+                <th>{{ "collectDetail.telephone" | translate}}</th>
+                <th>{{ "collectDetail.ReceivSend" | translate}}</th>
+                <th>{{ "collectDetail.createTime" | translate}}</th>
+                <th>{{ "collectDetail.messageContent" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of msgLogList">
+                <td>{{data.adminName}}</td>
+                <td>{{data.applyDateStr}}</td>
+                <td>{{data.status}}</td>
+                <td>{{data.adminId}}</td>
+                <td>{{data.applyDateStr}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+        </div>
+        <div id="rrr">
+          <div class="c-title">{{ "collectDetail.callRecord" | translate}}</div>
+          <nz-table [nzData]="callLogList" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr>
+                <th>{{ "collectDetail.name" | translate}}</th>
+                <th>{{ "collectDetail.telephone" | translate}}</th>
+                <th>{{ "collectDetail.callNumber" | translate}}</th>
+                <th>{{ "collectDetail.lastCallTime" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of callLogList">
+                <td>{{data.adminName}}</td>
+                <td>{{data.applyDateStr}}</td>
+                <td>{{data.status}}</td>
+                <td>{{data.adminId}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+        </div>
+        <div id="ggg">
+          <div class="c-title">{{ "collectDetail.contactBook" | translate}}</div>
+          <nz-table [nzData]="phoneList" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr>
+                <th>{{ "collectDetail.name" | translate}}</th>
+                <th>{{ "collectDetail.telephone" | translate}}</th>
+                <th>{{ "collectDetail.callNumber" | translate}}</th>
+                <th>{{ "collectDetail.lastCallTime" | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of phoneList">
+                <td>{{data.contactName}}</td>
+                <td>{{data.contactPhone}}</td>
+                <td>{{data.status}}</td>
+                <td>{{data.adminId}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <br/>
+        </div>
+      </div>
+      <div class="phone-tips" id="div-iframe">
+        <h3>{{userInfo.phoneNumber}}</h3>
+        <button nz-button nzType="primary" (click)="phoneFn(1)">{{'collectDetail.dial' | translate}}</button>
+        <button nz-button nzType="primary" (click)="phoneFn(2)">{{'collectDetail.sendMessage' | translate}}</button>
+        <button nz-button nzType="primary" (click)="copyClipboard(1)">{{'collectDetail.copyPhone' | translate}}</button>
+        <button nz-button nzType="primary" (click)="copyClipboard(2)">{{'collectDetail.copyLink' | translate}}</button>
+      </div>
+    </div>
+    <div class="c-search-group c-search-border">
+      <div class="c-search-itemRight">
+        <ul class="sectionList c-flex-row-start" style="flex-wrap:wrap;height: auto;">
+          <li (click) = 'changeStatus(1)' [ngClass]='{"active-tag" : (1 == chType)}'>
+            {{'collectDetail.collectionLog' | translate}}
+          </li>
+          <li (click) = 'changeStatus(2)' [ngClass]='{"active-tag" : (2 == chType)}'>
+            {{'collectDetail.collectionPhone' | translate}}
+          </li>
+          <li (click) = 'changeStatus(3)' [ngClass]='{"active-tag" : (3 == chType)}'>
+            {{'collectDetail.collectionSms' | translate}}
+          </li>
+          <li (click) = 'changeStatus(4)' [ngClass]='{"active-tag" : (4 == chType)}'>
+            {{'collectDetail.collectionFlow' | translate}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="c-search-group">
+      <div class="c-search-item">
+        <button nz-button nzType="primary" *ngIf="1 == chType" (click) = 'addModelFn() '>
+          {{ "common.operate.add" | translate}}
+        </button>
+        <!-- <button nz-button nzType="primary"  (click) = 'getList() '>
+          {{ "common.search" | translate}}
+        </button>
+        <button style="margin-left: 20px;" nz-button (click) = 'reset() '>
+          {{ "common.reset" | translate}}
+        </button>
+        <button style="margin-left: 20px;" nz-button (click) = 'reset() '>
+          {{ "common.ex" | translate}}
+        </button> -->
+      </div>
+    </div>
+  </div>
+  <c-table [tableData]='tableData'>
+  </c-table>
+  <!-- <div class="c-pag">
+    <nz-pagination [nzShowTotal]="totalTemplate" (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange)='pageChange($event , "size")'
+      [nzPageIndex]="searchModel.currentPage" [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+    <ng-template #totalTemplate let-total>
+      <span>
+        {{ "common.total" | translate }}
+      </span>
+      <span>
+        {{ totalSize }}
+      </span>
+      <span>
+        {{ "common.pageUnit" | translate }}
+      </span>
+    </ng-template>
+  </div> -->
+  <button id="btn-msisdn" style="display: none;">{{ "collectDetail.dialNumber" | translate}}</button>
+</div>
+
+<nz-modal [(nzVisible)]="addModel" [nzTitle]="'collectDetail.addCollectionLog' | translate" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()" [nzOkLoading]="isOkLoading" [nzWidth]="500">
+  <div class="formChannel">
+    <form nz-form [formGroup]="logForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="logType">{{ "collectDetail.collectionLogType" | translate}}</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select formControlName="logType">
+            <nz-option nzValue="1" [nzLabel]="'collectDetail.dialNoAnswer' | translate"></nz-option>
+            <nz-option nzValue="2" [nzLabel]="'collectDetail.delayedRepayment' | translate"></nz-option>
+            <nz-option nzValue="3" [nzLabel]="'collectDetail.refusalRepayment' | translate"></nz-option>
+            <nz-option nzValue="4" [nzLabel]="'collectDetail.emptyNumber' | translate"></nz-option>
+            <nz-option nzValue="5" [nzLabel]="'collectDetail.downtime' | translate"></nz-option>
+            <nz-option nzValue="6" [nzLabel]="'collectDetail.extension' | translate"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="logForm.get('logType').dirty && logForm.get('logType').errors">{{ "collectDetail.inputName" | translate}}</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired>{{ "collectDetail.remarks" | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <textarea formControlName="remark" nz-input rows="2"></textarea>
+          <nz-form-explain *ngIf="logForm.get('remark').dirty&&logForm.get('remark').hasError('required')">{{ "collectDetail.inputRemarks" | translate}}</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row style="margin-bottom:8px;">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <label nz-checkbox formControlName="remind">
+            <span>{{ "collectDetail.appointmentReminder" | translate}}</span>
+          </label>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item *ngIf="logForm.value.remind">
+        <nz-form-label [nzSpan]="6" [nzRequired]="logForm.get('remind')?.value">{{ "collectDetail.appointmentReminder" | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-date-picker [nzStyle]="{width:'262px'}" nzShowTime formControlName="remindTime"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item *ngIf="logForm.value.remind">
+        <nz-form-label [nzSpan]="6" [nzRequired]="logForm.get('remind')?.value">{{ "collectDetail.reminderContent" | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <textarea formControlName="remindContent" nz-input rows="2"></textarea>
+          <nz-form-explain *ngIf="logForm.get('remindContent').dirty&&logForm.get('remindContent').hasError('required')">{{ "collectDetail.inputReminderContent" | translate}}</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="extendModel" [nzTitle]="'collectDetail.extension' | translate" (nzOnOk)="extendOk()" (nzOnCancel)="extendCancel()" [nzOkLoading]="isOkLoading" [nzWidth]="500">
+  <div class="formChannel">
+    <form nz-form [formGroup]="extendForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">{{ "collectDetail.orderNo" | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          {{para.orderNo}}
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired>{{ "collectDetail.amount" | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <input nz-input formControlName="money" id="money" [placeholder]="'collectDetail.inputAmount' | translate">
+          <nz-form-explain *ngIf="extendForm.get('money').dirty&&extendForm.get('money').hasError('required')">{{ "collectDetail.inputAmount" | translate}}!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <div nz-col nzSpan="6"> </div>
+        <nz-form-control [nzSpan]="14">
+            <nz-table [nzData]="[{}]" [nzShowPagination]="false" nzBordered>
+              <tbody>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.auditMoney" | translate}}</td><td>{{extendInfo.payMoney}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.financingAmount" | translate}}</td><td>{{extendInfo.financingAmount}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.interest" | translate}}</td><td>{{extendInfo.lendRateMoney}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.overDueRateMoney" | translate}}</td><td>{{extendInfo.overDueFine}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.currentRepay" | translate}}</td><td>{{extendInfo.currentRepay}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.amountRepaid" | translate}}</td><td>{{extendInfo.realRepayMoney}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.RemainCurrentRepay" | translate}}</td><td>{{extendInfo.surplusRepay}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.payDate" | translate}}</td><td>{{extendInfo.payDateStr}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.loanDays" | translate}}</td><td>{{extendInfo.loanDays}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.planRepaymentDate" | translate}}</td><td>{{extendInfo.planRepaymentDateStr}}</td></tr>
+                <tr><td style="width:50%">{{ "collectDetail.loanOrderDetails.extensionDate" | translate}}</td><td>{{extendInfo.exhibitionPeriodDateStr}}</td></tr>
+              </tbody>
+            </nz-table>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="phoneModel" [nzTitle]="phoneType == 1 ? ('collectDetail.dialNumber' | translate) : ('collectDetail.sendMessage' | translate) " (nzOnOk)="phoneOk()" (nzOnCancel)="phoneCancel()" [nzOkLoading]="isOkLoading" [nzWidth]="500">
+  <div class="formChannel">
+    <ul class="sectionList c-flex-row-start c-search-border" style="flex-wrap:wrap;height: auto;margin-bottom: 15px;">
+      <li (click) = 'changePhoneStatus(1)' [ngClass]='{"active-tag" : (1 == phoneMdlType)}'>
+        {{ "collectDetail.friendInfo" | translate }}
+      </li>
+      <li (click) = 'changePhoneStatus(2)' [ngClass]='{"active-tag" : (2 == phoneMdlType)}'>
+        {{ "collectDetail.addressBook" | translate }}
+      </li>
+      <li (click) = 'changePhoneStatus(3)' [ngClass]='{"active-tag" : (3 == phoneMdlType)}'>
+        {{ "collectDetail.callRecord" | translate }}
+      </li>
+    </ul>
+    <form nz-form [formGroup]="phoneForm">
+      <nz-form-item>
+        <div nz-col nzSpan="4"> </div>
+        <nz-form-control [nzSpan]="16">
+          <!-- 紧急联系人 -->
+          <nz-table *ngIf="phoneMdlType == 1" [nzData]="friendInfo" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr>
+                <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event, 1)"></th>
+                <th>{{ "collectDetail.name" | translate }}</th>
+                <th>{{ "collectDetail.phone" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of friendInfo">
+                <td nzShowCheckbox [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="checkEmergent(data)"></td>
+                <td>{{data.contactName}}</td>
+                <td>{{data.contactPhone}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <!-- 通讯录 -->
+          <nz-table *ngIf="phoneMdlType == 2" [nzData]="phoneList" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr>
+                <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event, 2)"></th>
+                <th>{{ "collectDetail.name" | translate }}</th>
+                <th>{{ "collectDetail.phone" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of phoneList">
+                <td nzShowCheckbox [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="checkEmergent(data)"></td>
+                <td>{{data.contactName}}</td>
+                <td>{{data.contactPhone}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <!-- 通话记录 -->
+          <nz-table *ngIf="phoneMdlType == 3" [nzData]="loanDetail" [nzShowPagination]="false" nzBordered>
+            <thead>
+              <tr>
+                <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event, 3)"></th>
+                <th>{{ "collectDetail.name" | translate }}</th>
+                <th>{{ "collectDetail.phone" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of loanDetail">
+                <td nzShowCheckbox [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="checkEmergent(data)"></td>
+                <td>{{data.status}}</td>
+                <td>{{data.adminId}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item *ngFor="let item of phoneArray;let i = index">
+        <nz-form-label *ngIf="i==0" [nzSpan]="6" nzRequired>{{ "collectDetail.addPhone" | translate }}</nz-form-label>
+        <nz-form-control [nzOffset]="i==0?0:6" [nzSpan]="14">
+          <input nz-input id="phoneNumber" [(ngModel)]="item.phone" [ngModelOptions]="{standalone: true}" [placeholder]="'collectDetail.inputPhone' | translate">
+        </nz-form-control>
+        <div *ngIf="phoneType == 2" class="icon-content" nz-col [nzSpan]="4">
+          <i *ngIf="i!=0" class="anticon anticon-minus-circle-o" (click)="deletephoneNum(item)"></i>
+          <i *ngIf="i==0" class="anticon anticon-plus-circle-o" (click)="addphoneNum()"></i>
+        </div>
+      </nz-form-item>
+
+      <nz-form-item *ngIf="phoneType==2">
+        <nz-form-label [nzSpan]="6" nzRequired>{{ "collectDetail.messageContent" | translate }}</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <textarea formControlName="msg" nz-input rows="2"  [placeholder]="'collectDetail.messageContent' | translate"></textarea>
+          <nz-form-explain *ngIf="phoneForm.get('msg').dirty&&phoneForm.get('msg').hasError('required')">{{ "collectDetail.msgContent" | translate }}!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</nz-modal>

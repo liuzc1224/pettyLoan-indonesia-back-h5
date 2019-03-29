@@ -1,0 +1,61 @@
+<div class="c-content-wrap">
+  <div class="c-search-wrap">
+    <div class="c-search-group">
+      <div class="c-search-item">
+        <div class="c-search-itemLeft">
+          {{ "reportModule.salesdata.date" | translate}}:
+        </div>
+        <div class="c-search-itemRight">
+          <nz-date-picker [(ngModel)]="searchModel.time" [nzPlaceHolder] = '"financeModule.salesdata.prompt" | translate' ></nz-date-picker>
+        </div>
+      </div>
+    </div>
+    <div class="c-search-btnGroup">
+      <button nz-button nzType="primary" (click)='search() '>
+        {{ "common.search" | translate}}
+      </button>
+      <button style="margin-left: 20px;" nz-button (click)='reset() '>
+        {{ "common.reset" | translate}}
+      </button>
+    </div>
+  </div>
+  <div class="gutter-example">
+    <div nz-row>
+      <div nz-col nzSpan="24" style="background-color: #f2f2f2;color: black;font-weight: bolder">
+        <h3>{{ "reportModule.salesdata.sameday" | translate}}</h3>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col class="gutter-row" nzSpan="8">
+        <div class="gutter-box">
+          <table>
+            <tr *ngFor="let item of 'reportModule.salesdata.table1' | translate">
+              <td>{{item["name"]}}</td>
+              <td>{{item["name"]}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div nz-col class="gutter-row" nzSpan="8">
+        <div class="gutter-box">
+          <table>
+            <tr *ngFor="let item of 'reportModule.salesdata.table2' | translate">
+              <td>{{item["name"]}}</td>
+              <td>{{item["name"]}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div nz-col class="gutter-row" nzSpan="8">
+        <div class="gutter-box">
+          <table>
+            <tr *ngFor="let item of 'reportModule.salesdata.table3' | translate">
+              <td>{{item["name"]}}</td>
+              <td>{{item["name"]}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

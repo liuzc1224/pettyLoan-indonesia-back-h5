@@ -1,0 +1,43 @@
+<div class="c-content-wrap">
+  <div nz-row>
+    <div nz-col nzSpan="24" style="background-color: #f2f2f2;color: black;font-weight: bolder">
+      <h3>{{ "reportModule.financialdata.today" | translate}}</h3>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="22" nzOffset="1">
+      <table>
+        <tr *ngFor="let item of 'reportModule.conversionfunnel.tableData' | translate">
+          <td>{{item["name"]}}</td>
+          <td>{{item["name"]}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="24" style="background-color: #f2f2f2;color: black;font-weight: bolder">
+      <h3>{{ "reportModule.financialdata.history" | translate}}</h3>
+    </div>
+  </div>
+  <div class="c-search-wrap">
+    <div class="c-search-group">
+      <div class="c-search-item">
+        <div class="c-search-itemLeft">
+          {{ "reportModule.salesdata.date" | translate}}:
+        </div>
+        <div class="c-search-itemRight">
+          <nz-date-picker [(ngModel)]="searchModel.time" [nzPlaceHolder] = '"financeModule.salesdata.prompt" | translate' ></nz-date-picker>
+        </div>
+      </div>
+    </div>
+    <div class="c-search-btnGroup">
+      <button nz-button nzType="primary" (click)='search() '>
+        {{ "common.search" | translate}}
+      </button>
+      <button style="margin-left: 20px;" nz-button (click)='reset() '>
+        {{ "common.reset" | translate}}
+      </button>
+    </div>
+  </div>
+  <c-table [tableData] = 'tableData'></c-table>
+</div>

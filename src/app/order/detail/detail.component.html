@@ -1,0 +1,256 @@
+<div>
+  <!--借款订单详情-->
+  <div class="auth-table-wrap" *ngIf='loanOrderInfoData!={}'>
+    <p class="th-title">{{'loanOrderDetails.title' | translate}}</p>
+    <table *ngIf="loanOrderInfoData">
+      <tr>
+        <td>{{ 'loanOrderDetails.list.creditOrderNo' | translate }}</td>
+        <td>{{ loanOrderInfoData['creditOrderNo'] || 'no' }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.orderNo' | translate }}</td>
+        <td>{{ loanOrderInfoData['orderNo'] || 'no' }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.stringCreateTime' | translate }}</td>
+        <td>{{ loanOrderInfoData['stringCreateTime'] || 'no' }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.orderType' | translate }}</td>
+        <td>{{ ('loanOrderDetails.orderType' | translate)[loanOrderInfoData["orderType"]] || 'no' }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.loanProductName' | translate }}</td>
+        <td>{{ loanOrderInfoData['loanProductName'] || 'no' }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.lendRate' | translate }}</td>
+        <td>
+          <span *ngIf="loanOrderInfoData['lendRate']">{{ (loanOrderInfoData['lendRate']*100).toFixed(2)}} %</span>
+          <span *ngIf="!loanOrderInfoData['lendRate']">no</span>
+        </td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.auditRate' | translate }}</td>
+        <td>
+          <span *ngIf="loanOrderInfoData['auditRate']">{{ (loanOrderInfoData['auditRate']*100).toFixed(2)}} %</span>
+          <span *ngIf="!loanOrderInfoData['auditRate']">no</span>
+        </td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.technologyRate' | translate }}</td>
+        <td>
+          <span *ngIf="loanOrderInfoData['technologyRate']">{{ (loanOrderInfoData['technologyRate']*100).toFixed(2)}} %</span>
+          <span *ngIf="!loanOrderInfoData['technologyRate']">no</span>
+        </td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.gracePeriod' | translate }}</td>
+        <td>{{ loanOrderInfoData['gracePeriod'] || "no" }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.gracePeriodDayRate' | translate }}</td>
+        <td>
+          <span *ngIf="loanOrderInfoData['gracePeriodDayRate']">{{ (loanOrderInfoData['gracePeriodDayRate']*100).toFixed(2)}} %</span>
+          <span *ngIf="!loanOrderInfoData['gracePeriodDayRate']">no</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>{{ 'loanOrderDetails.list.overdueDayRate' | translate }}</td>
+        <td>
+          <span *ngIf="loanOrderInfoData['overdueDayRate']">{{ (loanOrderInfoData['overdueDayRate']*100).toFixed(2)}} %</span>
+          <span *ngIf="!loanOrderInfoData['overdueDayRate']">no</span>
+        </td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.payDate' | translate }}</td>
+        <td>{{ dateToString(loanOrderInfoData['payDate']) || 'no'}}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.auditMoney' | translate }}</td>
+        <td>{{ loanOrderInfoData['auditMoney'] || 'no'}}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.loanDays' | translate }}</td>
+        <td>{{ loanOrderInfoData['loanDays'] || "no"}}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.monthAuditCharge' | translate }}</td>
+        <td>{{ loanOrderInfoData['monthAuditCharge'] || "no" }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.monthTechnologyCharge' | translate }}</td>
+        <td>{{ loanOrderInfoData['monthTechnologyCharge'] || "no" }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.lendRateMoney' | translate }}</td>
+        <td>{{ loanOrderInfoData['lendRateMoney'] || "no"}}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.currentRepay' | translate }}</td>
+        <td>{{ loanOrderInfoData['currentRepay'] || "no"}}</td>
+      </tr>
+      <!--优惠券-->
+      <tr>
+        <td>{{ 'loanOrderDetails.list.couponMoney' | translate }}</td>
+        <td>{{ loanOrderInfoData['couponMoney'] || "no" }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.dueDays' | translate }}</td>
+        <td>{{ loanOrderInfoData['dueDays'] || "no" }}</td>
+      </tr>
+
+      <tr>
+        <td>{{ 'loanOrderDetails.list.overDueRateMoney' | translate }}</td>
+        <td>{{ loanOrderInfoData['overDueRateMoney'] || "no" }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.currentRealRepay' | translate }}</td>
+        <td *ngIf="loanOrderInfoData['orderType']===2">
+          {{ loanOrderInfoData['currentRealRepay']+loanOrderInfoData['overDueRateMoney'] || "no" }}
+        </td>
+        <td *ngIf="loanOrderInfoData['orderType']===1">
+          {{ loanOrderInfoData['currentRealRepay']+loanOrderInfoData['overDueRateMoney']+loanOrderInfoData['monthAuditCharge']+loanOrderInfoData['monthTechnologyCharge'] || "no" }}
+        </td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.planRepaymentDate' | translate }}</td>
+        <td>{{ dateToString(loanOrderInfoData['planRepaymentDate']) || "no" }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.realRepayMoney' | translate }}</td>
+        <td>{{ loanOrderInfoData['realRepayMoney'] || "no" }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.realRepaymentDate' | translate }}</td>
+        <td>{{ dateToString(loanOrderInfoData['realRepaymentDate']) || "no" }}</td>
+      </tr>
+      <tr>
+        <td>{{ 'loanOrderDetails.list.status' | translate }}</td>
+        <td>{{ ('loanOrderDetails.status' | translate)[loanOrderInfoData['status']] || "no" }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 收款账户 -->
+  <div class="auth-table-wrap" *ngIf='withdrawalInfoData.length'>
+    <p class="th-title">{{'withdrawalDetail.title' | translate}}</p>
+    <table>
+      <tbody>
+      <tr *ngFor="let item of ('withdrawalDetail.list' | translate)">
+        <td>{{item.name}}</td>
+        <td>
+          <span *ngIf="item.reflect==='accountType'">
+            {{('withdrawalDetail.type' | translate)[withdrawalInfoData[0][item.reflect]] }}
+          </span>
+          <span *ngIf="item.reflect!=='accountType'">
+            {{withdrawalInfoData[0][item.reflect] || 'no'}}
+          </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 放款详情 -->
+  <div class="auth-table-wrap" *ngIf='loanData.length'>
+    <p class="th-title">{{'loanDetails.title' | translate}}</p>
+    <table>
+      <thead>
+      <tr>
+        <td *ngFor="let item of ('loanDetails.list' | translate)">{{item.name}}</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of loanData">
+        <td>{{item['serialNumber']}}</td>
+        <td>{{ dateToString(item['createTime']) }}</td>
+        <td>{{ (item['payMoney']).toFixed(2)}}</td>
+        <td *ngIf="item['loanType']===2">
+          {{ item['monthAuditCharge']+loanOrderInfoData['monthTechnologyCharge'] || 0 }}
+        </td>
+        <td *ngIf="item['loanType']===1">
+          0
+        </td>
+        <td *ngIf="item['loanType']===2">
+          {{ (item['payMoney']-item['monthAuditCharge']-loanOrderInfoData['monthTechnologyCharge']).toFixed(2) || 0 }}
+        </td>
+        <td *ngIf="item['loanType']===1">
+          {{(item['payMoney']).toFixed(2)}}
+        </td>
+        <td>{{('loanDetails.paymentResult' | translate)[item['paymentResult']]}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 还款详情 -->
+  <div class="auth-table-wrap" *ngIf='repaymentData.length'>
+    <p class="th-title">{{'repaymentDetails.title' | translate}}</p>
+    <table *ngFor="let item of repaymentData;let i = index" [style.marginTop]="i>0 ? '20px': 0">
+      <thead>
+      <tr>
+        <td *ngFor="let item of ('repaymentDetails.list' | translate)">{{item.name}}</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{item['currentPeriod']+"/"+item['totalPeriod']}}</td>
+        <td>{{item['payMoney'] ? item['payMoney'].toFixed(2) : 'no'}}</td>
+        <td *ngIf="item['loanType']===2">
+          {{item['currentRepay'] ? (item['currentRepay']+item['overDueFine']).toFixed(2) : 'no'}}
+        </td>
+        <td *ngIf="item['loanType']===1">
+          {{item['currentRepay'] ? (item['currentRepay']+item['overDueFine']+item['otherCost']).toFixed(2) : 'no'}}
+        </td>
+        <td>{{item['principal'] || 'no'}}</td>
+        <td>{{item['interestMoney'] ? item['interestMoney'].toFixed(2) : 'no'}}</td>
+        <td>{{item['otherCost'] ||  'no'}}</td>
+        <td>{{item['overDueFine'] ||  'no'}}</td>
+        <td>{{item['realRepayMoney'] ||  'no'}}</td>
+        <td>{{('repaymentDetails.status' | translate)[item['status']]}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- 流水信息 -->
+  <div class="auth-table-wrap" *ngIf='streamData.length'>
+    <table style="background-color: #cccccc">
+      <thead>
+      <tr>
+        <td class="td" *ngFor="let item of ('repaymentDetails.list1' | translate)">{{item.name}}</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of streamData">
+        <td class="td">{{item['currentPeriod']+"/"+item['totalPeriod']}}</td>
+        <td class="td">{{item['serialNumber']}}</td>
+        <td class="td">{{item['repaymentDateStr']}}</td>
+        <td class="td">{{ "repaymentDetails.type" | translate }}</td>
+        <td class="td">{{item['repayMoney']}}</td>
+        <td class="td">{{('repaymentDetails.operationResult' | translate)[item['operationResult']]}}</td>
+        <td class="td">{{item['repaymentDateStr']}}</td>
+        <td class="td">{{('repaymentDetails.operator' | translate)[item['operator']]}}</td>
+        <td class="td">{{item['description']}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- 订单操作记录 -->
+  <!--<div class="auth-table-wrap" *ngIf='repaymentInfoData.length'>-->
+  <!--<p class="th-title"><span style="width:25%;height: 100%;float:left;line-height: 20px;" *ngFor="let item of ('newRepaymentDetail.title' | translate)">{{item}}</span></p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr *ngFor="let item of repaymentInfoData">-->
+  <!--<td>{{item.operationType}}</td>-->
+  <!--<td>{{item.stringOperationTime}}</td>-->
+  <!--<td>{{item.operationResult}}</td>-->
+  <!--<td>{{item.operationEmployeeName}}</td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+</div>

@@ -1,0 +1,2071 @@
+<div>
+  <!--<div class="c-search-wrap">-->
+  <div class="c-search-group c-search-border">
+    <ul class="sectionList c-flex-row-start c-flex-auto-wrap">
+      <li
+        *ngFor = 'let item of statusEnum'
+        (click) = 'changeStatus(item["value"])'
+        [ngClass]='{"active-tag" : item["value"] == this.status}'>
+        {{ item['desc'] }}
+      </li>
+    </ul>
+    <!--</div>-->
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="22" [nzOffset]="1" *ngIf="status==1">
+      <!--登录信息-->
+      <nz-collapse [nzBordered]="false" *ngIf="loginInfoData">
+        <nz-collapse-panel [nzHeader]="'authModule.loginInfo.title' | translate" [nzActive]="'true'" >
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.loginInfo.time' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ loginInfoData['createTime'] ? toString(loginInfoData['createTime']) : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="12">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.loginInfo.ip' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ loginInfoData['ipAddress'] ? loginInfoData['ipAddress'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="12">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.loginInfo.degree' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ loginInfoData['latitude'] && loginInfoData['longitude'] ? loginInfoData['latitude']+','+loginInfoData['longitude'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="12">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.loginInfo.deviceNo' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ loginInfoData['deviceId'] ? loginInfoData['deviceId'] : 'no'}}
+              </div>
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <!--基本信息-->
+      <nz-collapse [nzBordered]="false" *ngIf="basicInfoData">
+        <nz-collapse-panel [nzHeader]="'authModule.basicInfo.title' | translate" [nzActive]="'true'" >
+          <div nz-row>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.time' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ basicInfoData[0]['applyDate'] ? basicInfoData[0]['applyDateStr'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.orderNo' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ basicInfoData[0]['creditOrderNo'] ? basicInfoData[0]['creditOrderNo'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.appPackage' | translate }}
+              </div>
+          <!--App包名-->
+                <div nz-col nzSpan="18">
+                  {{ basicInfoData[0]['vestName'] ? basicInfoData[0]['vestName'] : 'no'}}
+                </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.userLevel' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ basicInfoData[0]['userGrade'] ? basicInfoData[0]['userGrade'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.phone' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ basicInfoData[0]['userPhone'] ? basicInfoData[0]['userPhone'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.approver' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ basicInfoData[0]['adminName'] ? basicInfoData[0]['adminName'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.status' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ basicInfoData[0]['status'] ? ('authModule.basicInfo.type' | translate)[basicInfoData[0]['status']+''] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.validityPeriod' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ basicInfoData[0]['approveDays'] ? basicInfoData[0]['approveDays'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.name' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ deviceInfoData && deviceInfoData['deviceName'] ? deviceInfoData['deviceName'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.creditScore' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ creditScore ? creditScore : "no" }}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.telecommunications' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ telecomScore ? telecomScore : "no" }}
+              </div>
+            </div>
+            <div nz-col nzSpan="8">
+              <div nz-col nzSpan="6" class="bold">
+                {{ 'authModule.basicInfo.model' | translate }}
+              </div>
+              <div nz-col nzSpan="18">
+                {{ deviceInfoData && deviceInfoData['model'] ? deviceInfoData['model'] : 'no'}}
+              </div>
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <!--个人信息-->
+      <nz-collapse [nzBordered]="false" *ngIf="personalInfoData">
+        <nz-collapse-panel [nzHeader]="'authModule.personalInfo.title' | translate" [nzActive]="'true'" >
+          <div nz-row>
+            <div nz-col [nzSpan]="16" class="bold">
+              {{ 'authModule.personalInfo.info' | translate }}
+            </div>
+            <div nz-col [nzSpan]="8" class="bold">
+              {{ 'authModule.personalInfo.ktp' | translate }}
+            </div>
+            <div nz-col [nzSpan]="16">
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.name' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['usernameShort'] ? personalInfoData['usernameShort'] : 'no'}}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.educationLevel' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['educationBackground'] ? ('authModule.personalInfo.educationLevelType' | translate )[personalInfoData['educationBackground']] : 'no'}}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.gender' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['gender'] ? ('authModule.personalInfo.genderType' | translate )[personalInfoData['gender']] : 'no'}}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.age' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['age'] ? personalInfoData['age'] : 'no'}}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.date' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['birthday'] ? dateToString(personalInfoData['birthday']) : 'no'}}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.motherName' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['motherName'] ? personalInfoData['motherName'] : 'no'}}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.childStatus' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{  personalInfoData['childNumber'] ? personalInfoData['childNumber'] : 'no' }}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.account' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{  personalInfoData['whatsapp'] ? personalInfoData['whatsapp'] : 'no' }}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.identification' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['idNumber'] ? personalInfoData['idNumber'] : 'no'}}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.maritalStatus' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['maritalStatus'] ? ('authModule.personalInfo.maritalStatusType' | translate )[personalInfoData['maritalStatus']] : 'no'}}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.address' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['street']}}
+                  {{personalInfoData['block']}}
+                  {{personalInfoData['regent']}}
+                  {{personalInfoData['city']}}
+                  {{personalInfoData['province'] }}
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <div nz-col nzSpan="6" class="bold">
+                  {{ 'authModule.personalInfo.livingTime' | translate }}
+                </div>
+                <div nz-col nzSpan="18">
+                  {{ personalInfoData['residentialDuration'] ? ('authModule.personalInfo.residentialDurationType' | translate)[personalInfoData['residentialDuration']] : 'no'}}
+                </div>
+              </div>
+            </div>
+            <div nz-col [nzSpan]="8">
+              <img  src="{{ personalInfoData['front'] ? personalInfoData['front'] : 'no'}}" height="260px" data-magnify="gallery" [attr.data-src]="personalInfoData['front'] ? personalInfoData['front'] : 'no'">
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <!--雇佣信息-->
+      <nz-collapse [nzBordered]="false" *ngIf="workInfoData">
+        <nz-collapse-panel [nzHeader]="'authModule.employmentInfo.title' | translate" [nzActive]="'true'" >
+          <div nz-col [nzSpan]="16" class="bold">
+            {{ 'authModule.employmentInfo.info' | translate }}
+          </div>
+          <div nz-col [nzSpan]="8" class="bold">
+            {{ 'authModule.employmentInfo.proofIncome' | translate }}
+          </div>
+          <div nz-col [nzSpan]="16">
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.employmentInfo.career' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ workInfoData['socialIdentityStr'] ? workInfoData['socialIdentityStr'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.employmentInfo.income' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ workInfoData['monthlyIncome'] ? ('authModule.income' | translate)[workInfoData['monthlyIncome']+''] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.employmentInfo.company' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ workInfoData['companyName'] ? workInfoData['companyName'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.employmentInfo.province' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ workInfoData['province'] ? workInfoData['province'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.employmentInfo.city' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ workInfoData['city'] ? workInfoData['city'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.employmentInfo.region' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ workInfoData['regent'] ? workInfoData['regent'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.employmentInfo.area' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ workInfoData['block'] ? workInfoData['block'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.employmentInfo.phone' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ workInfoData['telphone'] ? workInfoData['telphone'] : 'no'}}
+              </div>
+            </div>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <img  src="{{ workInfoData['incomeProof'] ? workInfoData['incomeProof'] : 'no'}}" height="200px" data-magnify="gallery" [attr.data-src]="workInfoData['incomeProof'] ? workInfoData['incomeProof'] : 'no'">
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+
+
+      <!--身份验证结果-->
+      <nz-collapse [nzBordered]="false" *ngIf="identityrecognition">
+        <nz-collapse-panel [nzHeader]="('authModule.authenticationResult.title' | translate ) + ' '+' : ' + yzjg "  [nzActive]="'true'" >
+          <div nz-col [nzSpan]="16">
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.name' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                <div nz-col [nzSpan]="12">
+                  {{ identityrecognition['name'] ? identityrecognition['name'] : 'no'}}
+                </div>
+                <div nz-col [nzSpan]="12">
+                  {{ identityrecognition['wrongType'] ? ('authModule.authenticationResult.nameResult' | translate)[identityrecognition['wrongType']] : 'no'}}
+                </div>
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.identification' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                <div nz-col [nzSpan]="12">
+                  {{ identityrecognition['nik'] ? identityrecognition['nik'] : 'no'}}
+                </div>
+                <div nz-col [nzSpan]="12">
+                  {{ identityrecognition['isMatch'] ? ('authModule.authenticationResult.result' | translate)[identityrecognition['isMatch']] : 'no'}}
+                </div>
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12" style="color: #cccccc">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.name' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ personalInfoData['usernameShort'] ? personalInfoData['usernameShort'] : 'no'}}
+              </div>
+            </div>
+
+            <div nz-col [nzSpan]="12" style="color: #cccccc">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.identification' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ personalInfoData['idNumber'] ? personalInfoData['idNumber'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.gender' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['gender'] ? identityrecognition['gender'] : 'no'}}
+              </div>
+            </div>
+
+
+
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.date' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['birthday'] ? identityrecognition['birthday'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.maritalStatus' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['maritalStatus'] ? identityrecognition['maritalStatus'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.hamlet' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['village'] ? identityrecognition['village'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.birthplace' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['birthplace'] ? identityrecognition['birthplace'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.street' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['street'] ? identityrecognition['street'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.address' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['addressv'] ? identityrecognition['addressv'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.religion' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['religion'] ? identityrecognition['religion'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.rtrw' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['rtRw'] ? identityrecognition['rtRw'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.career' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['occupation'] ? identityrecognition['occupation'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.validityPeriod' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['expiryDate'] ? identityrecognition['expiryDate'] : 'no'}}
+              </div>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <div nz-col [nzSpan]="6" class="bold">
+                {{ 'authModule.authenticationResult.bloodGroup' | translate }}
+              </div>
+              <div nz-col [nzSpan]="18">
+                {{ identityrecognition['bloodType'] ? identityrecognition['bloodType'] : 'no'}}
+              </div>
+            </div>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <div nz-col [nzSpan]="24" class="bold">
+              {{ 'authModule.authenticationResult.ktp' | translate }}
+            </div>
+            <div nz-col [nzSpan]="24">
+              <img  src="{{ identityrecognition['imgIdentityUrl'] ? identityrecognition['imgIdentityUrl'] : 'no'}}" height="200px" data-magnify="gallery" [attr.data-src]="identityrecognition['imgIdentityUrl'] ? identityrecognition['imgIdentityUrl'] : 'no'">
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+
+      <!--活体校验-->
+      <nz-collapse [nzBordered]="false" *ngIf="livenessCompare">
+        <nz-collapse-panel [nzHeader]="'authModule.liveCalibration.title' | translate" [nzActive]="'true'" >
+          <table>
+            <tr class="bold">
+              <td>
+                {{ 'authModule.liveCalibration.verification' | translate }}
+              </td>
+              <td>
+                {{ 'authModule.liveCalibration.ktp' | translate }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <img  src="{{ livenessCompare['imgIdentityUrl'] ? livenessCompare['imgIdentityUrl'] : 'no'}}" height="200px" data-magnify="gallery" [attr.data-src]="livenessCompare['imgIdentityUrl'] ? livenessCompare['imgIdentityUrl'] : 'no'">
+              </td>
+              <td>
+                <img  src="{{ livenessCompare['imgSelfUrl'] ? livenessCompare['imgSelfUrl'] : 'no'}}" height="200px" data-magnify="gallery" [attr.data-src]="livenessCompare['imgSelfUrl'] ? livenessCompare['imgSelfUrl'] : 'no'">
+              </td>
+            </tr>
+            <tr>
+              <td class="bold">
+                {{ 'authModule.liveCalibration.result' | translate }}
+              </td>
+              <td>
+                {{ livenessCompare['isMatch'] ? ( 'authModule.liveCalibration.type' | translate )[livenessCompare['isMatch']] : 'no'}}
+              </td>
+            </tr>
+          </table>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <!--风险识别-->
+      <nz-collapse [nzBordered]="false" *ngIf="riskIdentification">
+        <nz-collapse-panel [nzHeader]="'authModule.riskIdentification.title' | translate" [nzActive]="'true'" >
+          <table>
+            <tr class="bold">
+              <td>
+                {{ 'authModule.riskIdentification.type' | translate }}
+              </td>
+              <td>
+                {{ 'authModule.riskIdentification.state' | translate }}
+              </td>
+            </tr>
+            <tr>
+              <td class="bold">
+                {{ 'authModule.riskIdentification.userBlackList' | translate }}
+              </td>
+              <td>
+                {{ riskIdentification['userBlackList'] ? riskIdentification['userBlackList'] : 'no'}}
+              </td>
+            </tr>
+            <tr>
+              <td class="bold">
+                {{ 'authModule.riskIdentification.riskyFaces' | translate }}
+              </td>
+              <td>
+                {{ riskIdentification['riskyFaces'] ? riskIdentification['riskyFaces'] : 'no'}}
+              </td>
+            </tr>
+            <tr>
+              <td class="bold">
+                {{ 'authModule.riskIdentification.MultiPlatform' | translate }}
+              </td>
+              <td>
+                {{ riskIdentification['multiPlatform'] ? riskIdentification['multiPlatform'] : 'no'}}
+              </td>
+            </tr>
+          </table>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <!--设备号-->
+      <nz-collapse [nzBordered]="false" *ngIf="creditDeviceInfoData">
+        <nz-collapse-panel [nzHeader]="'authModule.creditDeviceInfo.title' | translate" [nzActive]="'true'" >
+          <table>
+            <tr>
+              <td class="bold">
+                {{ 'authModule.creditDeviceInfo.title' | translate }}
+              </td>
+              <td>
+                {{ creditDeviceInfoData[0]['deviceNum'] ? creditDeviceInfoData[0]['deviceNum'] : "no"}}
+              </td>
+            </tr>
+            <tr>
+              <td class="bold">
+                {{ 'authModule.creditDeviceInfo.creditOrderNo' | translate }}
+              </td>
+              <td class="bold">
+                {{ 'authModule.creditDeviceInfo.createTime' | translate }}
+              </td>
+            </tr>
+            <tr *ngFor="let item of creditDeviceInfoData[0]['details']">
+              <td>
+                {{ item['creditOrderNo'] ? item['creditOrderNo'] : "no" }}
+              </td>
+              <td>
+                {{ item['createTime']  ? item['createTime'] : "no"}}
+              </td>
+            </tr>
+          </table>
+        </nz-collapse-panel>
+      </nz-collapse>
+
+      <!--紧急联系人-->
+      <nz-collapse [nzBordered]="false" *ngIf="contactInfoData && contactInfoData['length']>0">
+        <nz-collapse-panel [nzHeader]="'authModule.contactInfo.title' | translate" [nzActive]="'true'" >
+          <div nz-row>
+            <div nz-col [nzSpan]="8" class="bold">
+              {{ 'authModule.contactInfo.contactName' | translate }}
+            </div>
+            <div nz-col [nzSpan]="8" class="bold">
+              {{ 'authModule.contactInfo.relation' | translate }}
+            </div>
+            <div nz-col [nzSpan]="8" class="bold">
+              {{ 'authModule.contactInfo.contactPhone' | translate }}
+            </div>
+            <div nz-col [nzSpan]="24" *ngFor="let item of contactInfoData">
+              <div nz-col [nzSpan]="8">
+                {{ item['contactName'] }}
+              </div>
+              <div nz-col [nzSpan]="8">
+                {{ ('authModule.contactInfo.type' | translate)[item['relation']] }}
+              </div>
+              <div nz-col [nzSpan]="8">
+                {{ item['contactPhone'] }}
+              </div>
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <!--当前借款信息-->
+      <nz-collapse [nzBordered]="false" *ngIf="loanInfoData">
+        <nz-collapse-panel [nzHeader]="'authModule.loanInfo.title' | translate" [nzActive]="'true'" >
+          <div nz-col [nzSpan]="12">
+            <div nz-col [nzSpan]="6" class="bold">
+              {{ 'authModule.loanInfo.applyCash' | translate }}
+            </div>
+            <div nz-col [nzSpan]="18">
+              {{ loanInfoData["payMoney"] ? loanInfoData["payMoney"] : "no" }}
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <div nz-col [nzSpan]="6" class="bold">
+              {{ 'authModule.loanInfo.loanProductType' | translate }}
+            </div>
+            <div nz-col [nzSpan]="18">
+              {{ loanInfoData["orderType"] ? ('authModule.loanInfo.type' | translate)[loanInfoData["orderType"]+""] : "no" }}
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <div nz-col [nzSpan]="6" class="bold">
+              {{ 'authModule.loanInfo.productTerm' | translate }}
+            </div>
+            <div nz-col [nzSpan]="18">
+              {{ loanInfoData["loanDays"] ? loanInfoData["loanDays"] : "no" }}
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <div nz-col [nzSpan]="6" class="bold">
+              {{ 'authModule.loanInfo.productPeriod' | translate }}
+            </div>
+            <div nz-col [nzSpan]="18">
+              {{ loanInfoData["currentPeriod"] && loanInfoData["applyMonth"] ? loanInfoData["currentPeriod"]+"/"+loanInfoData["applyMonth"] : "1/1" }}
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <div nz-col [nzSpan]="6" class="bold">
+              {{ 'authModule.loanInfo.serviceRate' | translate }}
+            </div>
+            <div nz-col [nzSpan]="18">
+              {{ (loanInfoData["auditRate"]+loanInfoData["technologyRate"]) ? ((loanInfoData["auditRate"]+loanInfoData["technologyRate"])*100).toFixed(2)+"%" : "no"}}
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <div nz-col [nzSpan]="6" class="bold">
+              {{ 'authModule.loanInfo.dayRate' | translate }}
+            </div>
+            <div nz-col [nzSpan]="18">
+              {{ loanInfoData["lendRate"] ? (loanInfoData["lendRate"]*100).toFixed(2)+"%" : "no" }}
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <div nz-col [nzSpan]="6" class="bold">
+              {{ 'authModule.loanInfo.serviceFeeAmount' | translate }}
+            </div>
+            <div nz-col [nzSpan]="18">
+              {{ loanInfoData["monthAuditCharge"]+loanInfoData["monthTechnologyCharge"] }}
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <div nz-col [nzSpan]="6" class="bold">
+              {{ 'authModule.loanInfo.interestPayable' | translate }}
+            </div>
+            <div nz-col [nzSpan]="18">
+              {{ loanInfoData["lendRateMoney"] ? loanInfoData["lendRateMoney"] : "no" }}
+            </div>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+
+      <!--审批记录-->
+      <nz-collapse [nzBordered]="false" *ngIf="recordInfoData">
+        <nz-collapse-panel [nzHeader]="'authModule.approvalInfo.title' | translate" [nzActive]="'true'" >
+          <table>
+            <tr>
+              <td>
+                {{ 'authModule.approvalInfo.creditOrderNo' | translate }}
+              </td>
+              <td>
+                {{ 'authModule.approvalInfo.stringOperationTime' | translate }}
+              </td>
+              <td>
+                {{ 'authModule.approvalInfo.createUserName' | translate }}
+              </td>
+              <td>
+                {{ 'authModule.approvalInfo.operationResult' | translate }}
+              </td>
+              <td>
+                {{ 'authModule.approvalInfo.operationRemark' | translate }}
+              </td>
+            </tr>
+            <tr *ngFor="let item of recordInfoData">
+              <td>
+                {{ item['creditOrderNo'] || 'no'}}
+              </td>
+              <td>
+                {{ item['operationTime'] ? dateToString(item['operationTime']) : "" }}
+              </td>
+              <td>
+                {{ item['createUserName']  || 'no'}}
+              </td>
+              <td>
+                {{ item['operationResult']  || 'no'}}
+              </td>
+              <td>
+                {{ item['operationRemark']  || 'no'}}
+              </td>
+            </tr>
+          </table>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </div>
+    <div nz-col [nzSpan]="22" [nzOffset]="1" *ngIf="status==2">
+      <!--历史申请订单-->
+      <nz-collapse [nzBordered]="false" *ngIf="applyOrderData">
+        <nz-collapse-panel [nzHeader]="'authModule.historyApplication.title' | translate" [nzActive]="'true'" >
+          <c-table [tableData]='applyOrderData'>
+          </c-table>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <!--历史借还信息-->
+      <nz-collapse [nzBordered]="false" *ngIf="borrowInfoData">
+        <nz-collapse-panel [nzHeader]="'authModule.historyBorrow.title' | translate" [nzActive]="'true'" >
+          <c-table [tableData]='borrowInfoData'>
+          </c-table>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </div>
+    <div nz-col [nzSpan]="24" *ngIf="status==3">
+      <!--运营商 - telkomsel-->
+      <div nz-col [nzSpan]="24">
+        <h2 style="text-align: center">{{'authModule.telkcomsel.title' | translate}}</h2>
+      </div>
+      <div nz-col [nzSpan]="24" *ngIf="telkomselData">
+        <!--用户账户信息-->
+        <nz-collapse [nzBordered]="false" *ngIf="telkomselData['accountInfo']">
+          <nz-collapse-panel [nzHeader]="'authModule.telkcomsel.accountInfo.title' | translate" [nzActive]="'true'" >
+            <table>
+              <tr>
+                <td>{{'authModule.telkcomsel.accountInfo.firstName' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.lastName' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.salutation' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.tcashAccount' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.tcashBalance' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.kartuAs' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.activeUntil' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.pukCode' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.email' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.facebook' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.twitter' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.telkomselPoin' | translate}}</td>
+                <td>{{'authModule.telkcomsel.accountInfo.remainingCredits' | translate}}</td>
+              </tr>
+              <tr>
+                <td>{{ telkomselData["accountInfo"]["firstName"]  || 'no'}}</td>
+                <td>{{ telkomselData["accountInfo"]["lastName"]  || 'no'}}</td>
+                <td>{{ telkomselData["accountInfo"]["salutation"]  || 'no'}}</td>
+                <td>{{ telkomselData["accountInfo"]["tcashAccount"] || 'no' }}</td>
+                <td>{{ telkomselData["accountInfo"]["tcashBalance"]  || 'no'}}</td>
+                <td>{{ telkomselData["accountInfo"]["kartuAs"]  || 'no'}}</td>
+                <td>{{ telkomselData["accountInfo"]["activeUntil"] || 'no' }}</td>
+                <td>{{ telkomselData["accountInfo"]["pukCode"] || 'no' }}</td>
+                <td>{{ telkomselData["accountInfo"]["email"] || 'no' }}</td>
+                <td>{{ telkomselData["accountInfo"]["facebook"] || 'no' }}</td>
+                <td>{{ telkomselData["accountInfo"]["twitter"] || 'no' }}</td>
+                <td>{{ telkomselData["accountInfo"]["remainingCredits"] || 'no' }}</td>
+                <td>{{ telkomselData["accountInfo"]["remainingCredits"] || 'no' }}</td>
+              </tr>
+            </table>
+          </nz-collapse-panel>
+        </nz-collapse>
+        <!--历史购买记录-->
+        <nz-collapse [nzBordered]="false" *ngIf="telkomselData['vouchersHistory']">
+          <nz-collapse-panel [nzHeader]="'authModule.telkcomsel.historyInfo.title' | translate" [nzActive]="'true'" >
+            <table>
+              <tr>
+                <td>{{'authModule.telkcomsel.historyInfo.firstPurchasedate' | translate}}</td>
+                <td colspan="2">{{ telkomselData['vouchersHistory']['firstPurchasedate'] }}</td>
+              </tr>
+              <tr>
+                <td>{{'authModule.telkcomsel.historyInfo.purchaseDate' | translate}}</td>
+                <td>{{'authModule.telkcomsel.historyInfo.serialNumber' | translate}}</td>
+                <td>{{'authModule.telkcomsel.historyInfo.credit' | translate}}</td>
+              </tr>
+              <tr *ngFor="let item of telkomselData['vouchersHistory']['purchase']">
+                <td>{{item['purchaseDate'] || 'no'}}</td>
+                <td>{{item['serialNumber'] || 'no'}}</td>
+                <td>{{item['credit'] || 'no'}}</td>
+              </tr>
+            </table>
+          </nz-collapse-panel>
+        </nz-collapse>
+        <!--近6个月账单-->
+        <nz-collapse [nzBordered]="false" *ngIf="telkomselData['billHistory']">
+          <nz-collapse-panel [nzHeader]="'authModule.telkcomsel.billInfo.title' | translate" [nzActive]="'true'" >
+            <table>
+              <tr>
+                <td>{{'authModule.telkcomsel.billInfo.month' | translate}}</td>
+                <td>{{'authModule.telkcomsel.billInfo.amount' | translate}}</td>
+              </tr>
+              <tr *ngFor="let item of telkomselData['billHistory']">
+                <td>{{item['month'] || 'no'}}</td>
+                <td>{{item['bill']['amount'] || 'no'}}</td>
+              </tr>
+            </table>
+          </nz-collapse-panel>
+        </nz-collapse>
+        <!--套餐信息-->
+        <nz-collapse [nzBordered]="false" *ngIf="telkomselData['quotaInfo']">
+          <nz-collapse-panel [nzHeader]="'authModule.telkcomsel.packageInfo.title' | translate" [nzActive]="'true'" >
+            <!--整体情况-->
+            <nz-collapse [nzBordered]="false">
+              <nz-collapse-panel [nzHeader]="'authModule.telkcomsel.packageInfo.overallInfo' | translate" [nzActive]="'true'" >
+                <table>
+                  <tr>
+                    <td>
+                      {{ 'authModule.telkcomsel.packageInfo.totalRemainingData' | translate }} : {{telkomselData['quotaInfo']['totalRemainingData'] || 'no'}}
+                    </td>
+                    <td>
+                      {{ 'authModule.telkcomsel.packageInfo.totalRemainingSms' | translate }} : {{telkomselData['quotaInfo']['totalRemainingSms'] || 'no'}}
+                    </td>
+                    <td>
+                      {{ 'authModule.telkcomsel.packageInfo.totalRemainingVoice' | translate }} : {{telkomselData['quotaInfo']['totalRemainingVoice'] || 'no'}}
+                    </td>
+                    <td>
+                      {{ 'authModule.telkcomsel.packageInfo.remainingMonetary' | translate }} : {{telkomselData['quotaInfo']['remainingMonetary'] || 'no'}}
+                    </td>
+                  </tr>
+                </table>
+              </nz-collapse-panel>
+            </nz-collapse>
+            <!--细分情况-->
+            <nz-collapse [nzBordered]="false">
+              <nz-collapse-panel [nzHeader]="'authModule.telkcomsel.packageInfo.subdivision' | translate" [nzActive]="'true'" >
+                <!--流量(单位：B）-->
+                <nz-collapse [nzBordered]="false">
+                  <nz-collapse-panel [nzHeader]="'authModule.telkcomsel.packageInfo.flow' | translate" [nzActive]="'true'" >
+                    <!--本地流量-->
+                    <div nz-col [nzSpan]="6">
+                      <table>
+                        <tr>
+                          <td colspan="2">
+                            {{ 'authModule.telkcomsel.packageInfo.localData.localFlow' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.localData.remainingData' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.localData.expiryDate' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['localData'][0] && telkomselData['quotaInfo']['localData'][0]['remainingData'] ? telkomselData['quotaInfo']['localData'][0]['remainingData'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['localData'][0] && telkomselData['quotaInfo']['localData'][0]['expiryDate'] ? telkomselData['quotaInfo']['localData'][0]['remainingData'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--通用流量余量信息-->
+                    <div nz-col [nzSpan]="6">
+                      <table>
+                        <tr>
+                          <td colspan="2">
+                            {{ 'authModule.telkcomsel.packageInfo.globalData.globalFlow' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.globalData.remainingData' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.globalData.expiryDate' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['globalData'][0] && telkomselData['quotaInfo']['globalData'][0]['remainingData'] ? telkomselData['quotaInfo']['globalData'][0]['remainingData'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['globalData'][0] && telkomselData['quotaInfo']['globalData'][0]['expiryDate'] ? telkomselData['quotaInfo']['globalData'][0]['expiryDate'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--限定流量信息-->
+                    <div nz-col [nzSpan]="6">
+                      <table>
+                        <tr>
+                          <td colspan="3">
+                            {{ 'authModule.telkcomsel.packageInfo.limitData.limitFlow' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.limitData.remainingData' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.limitData.expiryDate' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.limitData.region' | translate }}
+                          </td>
+
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['limitData'][0] && telkomselData['quotaInfo']['limitData'][0]['remainingData'] ? telkomselData['quotaInfo']['limitData'][0]['remainingData'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['limitData'][0] && telkomselData['quotaInfo']['limitData'][0]['expiryDate'] ? telkomselData['quotaInfo']['limitData'][0]['expiryDate'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['limitData'][0] && telkomselData['quotaInfo']['limitData'][0]['region'] ? telkomselData['quotaInfo']['limitData'][0]['region'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--其他流量信息-->
+                    <div nz-col [nzSpan]="6">
+                      <table>
+                        <tr>
+                          <td colspan="3">
+                            {{ 'authModule.telkcomsel.packageInfo.otherData.otherFlow' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.otherData.remainingData' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.otherData.expiryDate' | translate }}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['otherData'][0] && telkomselData['quotaInfo']['otherData'][0]['product'] ? telkomselData['quotaInfo']['otherData'][0]['product'] : "no"}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['otherData'][0] && telkomselData['quotaInfo']['otherData'][0]['remainingData'] ? telkomselData['quotaInfo']['otherData'][0]['remainingData'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['otherData'][0] && telkomselData['quotaInfo']['otherData'][0]['expiryDate'] ? telkomselData['quotaInfo']['otherData'][0]['expiryDate'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['otherData'][0] && telkomselData['quotaInfo']['otherData'][0]['product'] ? telkomselData['quotaInfo']['otherData'][0]['product'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </nz-collapse-panel>
+                </nz-collapse>
+                <!--通话（单位:S）-->
+                <nz-collapse [nzBordered]="false">
+                  <nz-collapse-panel [nzHeader]="'authModule.telkcomsel.packageInfo.call' | translate" [nzActive]="'true'" >
+                    <!--国内通话余量信息-->
+                    <div nz-col [nzSpan]="6">
+                      <table>
+                        <tr>
+                          <td colspan="2">
+                            {{ 'authModule.telkcomsel.packageInfo.domesticVoice.domesticCall' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.domesticVoice.remainingVoice' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.domesticVoice.expiryDate' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['domesticVoice'][0] && telkomselData['quotaInfo']['domesticVoice'][0]['remainingVoice'] ? telkomselData['quotaInfo']['domesticVoice'][0]['remainingVoice'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['domesticVoice'][0] && telkomselData['quotaInfo']['domesticVoice'][0]['expiryDate'] ? telkomselData['quotaInfo']['domesticVoice'][0]['expiryDate'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--漫游通话余量信息-->
+                    <div nz-col [nzSpan]="6">
+                      <table>
+                        <tr>
+                          <td colspan="2">
+                            {{ 'authModule.telkcomsel.packageInfo.roamingVoice.roamingCall' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.roamingVoice.remainingVoice' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.roamingVoice.expiryDate' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['roamingVoice'][0] && telkomselData['quotaInfo']['roamingVoice'][0]['remainingVoice'] ? telkomselData['quotaInfo']['roamingVoice'][0]['remainingVoice'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['roamingVoice'][0] && telkomselData['quotaInfo']['roamingVoice'][0]['expiryDate'] ? telkomselData['quotaInfo']['roamingVoice'][0]['expiryDate'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--限定通话余量信息-->
+                    <div nz-col [nzSpan]="6">
+                      <table>
+                        <tr>
+                          <td colspan="3">
+                            {{ 'authModule.telkcomsel.packageInfo.limitVoice.limitCall' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.limitVoice.remainingVoice' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.limitVoice.expiryDate' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.limitVoice.remainingVoice' | translate }}
+                          </td>
+
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['limitVoice'][0] && telkomselData['quotaInfo']['limitVoice'][0]['remainingVoice'] ? telkomselData['quotaInfo']['limitVoice'][0]['remainingVoice'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['limitVoice'][0] && telkomselData['quotaInfo']['limitVoice'][0]['expiryDate'] ? telkomselData['quotaInfo']['limitVoice'][0]['expiryDate'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['limitVoice'][0] && telkomselData['quotaInfo']['limitVoice'][0]['remainingVoice'] ? telkomselData['quotaInfo']['limitVoice'][0]['remainingVoice'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--其他通话信息-->
+                    <div nz-col [nzSpan]="6">
+                      <table>
+                        <tr>
+                          <td colspan="2">
+                            {{ 'authModule.telkcomsel.packageInfo.otherVoice.otherCall' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.otherVoice.remainingVoice' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.otherVoice.expiryDate' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['otherVoice'][0] && telkomselData['quotaInfo']['otherVoice'][0]['remainingVoice'] ? telkomselData['quotaInfo']['otherVoice'][0]['remainingVoice'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['otherVoice'][0] && telkomselData['quotaInfo']['otherVoice'][0]['expiryDate'] ? telkomselData['quotaInfo']['otherVoice'][0]['expiryDate'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </nz-collapse-panel>
+                </nz-collapse>
+                <!--短信-->
+                <nz-collapse [nzBordered]="false" *ngIf="telkomselData['quotaInfo']">
+                  <nz-collapse-panel [nzHeader]="'authModule.telkcomsel.packageInfo.SMS' | translate" [nzActive]="'true'" >
+                    <!--限定短信信息-->
+                    <div nz-col [nzSpan]="8">
+                      <table>
+                        <tr>
+                          <td colspan="3">
+                            {{ 'authModule.telkcomsel.packageInfo.limitSms.limitSMS' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.limitSms.remainingSms' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.limitSms.expiryDate' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.limitSms.region' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ telkomselData['quotaInfo']['limitSms'][0] && telkomselData['quotaInfo']['limitSms'][0]['remainingSms'] ? telkomselData['quotaInfo']['limitSms'][0]['remainingSms'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['limitSms'][0] && telkomselData['quotaInfo']['limitSms'][0]['expiryDate'] ? telkomselData['quotaInfo']['limitSms'][0]['expiryDate'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['limitSms'][0] && telkomselData['quotaInfo']['limitSms'][0]['region'] ? telkomselData['quotaInfo']['limitSms'][0]['region'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--其他短信余量信息-->
+                    <div nz-col [nzSpan]="8">
+                      <table>
+                        <tr>
+                          <td colspan="2">
+                            {{ 'authModule.telkcomsel.packageInfo.otherSms.otherSMS' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.otherSms.remainingSms' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.otherSms.expiryDate' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['otherSms'][0] && telkomselData['quotaInfo']['otherSms'][0]['remainingSms'] ? telkomselData['quotaInfo']['otherSms'][0]['remainingSms'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['otherSms'][0] && telkomselData['quotaInfo']['otherSms'][0]['expiryDate'] ? telkomselData['quotaInfo']['otherSms'][0]['expiryDate'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--信用限制(单位：RP)-->
+                    <div nz-col [nzSpan]="8">
+                      <table>
+                        <tr>
+                          <td colspan="2">
+                            {{ 'authModule.telkcomsel.packageInfo.creditLimit.credit' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.creditLimit.domestic' | translate }}
+                          </td>
+                          <td>
+                            {{ 'authModule.telkcomsel.packageInfo.creditLimit.roaming' | translate }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            {{telkomselData['quotaInfo']['creditLimit'][0] && telkomselData['quotaInfo']['creditLimit'][0]['domestic'] ? telkomselData['quotaInfo']['creditLimit'][0]['domestic'] : "no"}}
+                          </td>
+                          <td>
+                            {{telkomselData['quotaInfo']['creditLimit'][0] && telkomselData['quotaInfo']['creditLimit'][0]['roaming'] ? telkomselData['quotaInfo']['creditLimit'][0]['roaming'] : "no"}}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </nz-collapse-panel>
+                </nz-collapse>
+              </nz-collapse-panel>
+            </nz-collapse>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </div>
+      <div nz-col [nzSpan]="24" *ngIf="!telkomselData">
+        <button nz-button nzType="primary" style="width: 100%;height: 50px">
+          {{'authModule.noData' | translate}}
+        </button>
+      </div>
+      <!--运营商 - xl-->
+      <div nz-col [nzSpan]="24">
+        <h2 style="text-align: center;margin-top: 20px">{{'authModule.xl.title' | translate}}</h2>
+      </div>
+      <div nz-col [nzSpan]="24" *ngIf="XLData">
+        <nz-collapse [nzBordered]="false" *ngIf="XLData">
+          <nz-collapse-panel [nzHeader]="'authModule.xl.accountInfo.title' | translate" [nzActive]="'true'" >
+            <!--用户账户信息-->
+            <table>
+              <tr>
+                <td>{{'authModule.xl.accountInfo.accountId' | translate}}</td>
+                <td>{{'authModule.xl.accountInfo.accountType' | translate}}</td>
+                <td>{{'authModule.xl.accountInfo.salutation' | translate}}</td>
+                <td>{{'authModule.xl.accountInfo.accountExpiryDate' | translate}}</td>
+                <td>{{'authModule.xl.accountInfo.balance' | translate}}</td>
+                <td>{{'authModule.xl.accountInfo.totalRemainingData' | translate}}</td>
+                <td>{{'authModule.xl.accountInfo.totalRemainingSms' | translate}}</td>
+                <td>{{'authModule.xl.accountInfo.totalRemainingVoice' | translate}}</td>
+                <td>{{'authModule.xl.accountInfo.dataAmount' | translate}}</td>
+              </tr>
+              <tr>
+                <td>{{ XLData["xlInfo"][0]['accountId'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["accountType"] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["profile"]['salutation'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["account"]['accountExpiryDate'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["account"]['balance'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["account"]['totalRemainingData'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["account"]['totalRemainingSms'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["account"]['totalRemainingVoice'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["account"]['dataAmount'] || 'no' }}</td>
+              </tr>
+            </table>
+          </nz-collapse-panel>
+        </nz-collapse>
+        <nz-collapse [nzBordered]="false" *ngIf="XLData">
+          <nz-collapse-panel [nzHeader]="'authModule.xl.accountInfo.title' | translate" [nzActive]="'true'" >
+            <!--套餐信息（通话单位：s，流量单位：B）-->
+            <table>
+              <tr>
+                <td colspan="8">{{'authModule.xl.quotaInfo.title' | translate}}</td>
+              </tr>
+              <tr>
+                <td>{{'authModule.xl.quotaInfo.name' | translate}}</td>
+                <td>{{'authModule.xl.quotaInfo.voiceAllTotal' | translate}}</td>
+                <td>{{'authModule.xl.quotaInfo.voiceOnlyTotal' | translate}}</td>
+                <td>{{'authModule.xl.quotaInfo.smsOnlyTotal' | translate}}</td>
+                <td>{{'authModule.xl.quotaInfo.smsAllTotal' | translate}}</td>
+                <td>{{'authModule.xl.quotaInfo.dataAppsTotal' | translate}}</td>
+                <td>{{'authModule.xl.quotaInfo.dataTotal' | translate}}</td>
+                <td>{{'authModule.xl.quotaInfo.expiryDate' | translate}}</td>
+              </tr>
+              <tr>
+                <td>{{ XLData["xlInfo"][0]['quota_info'][0]['name'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["quota_info"][0]['voiceAllTotal'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["quota_info"][0]['voiceOnlyTotal'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["quota_info"][0]['smsOnlyTotal']  || 'no'}}</td>
+                <td>{{ XLData["xlInfo"][0]["quota_info"][0]['smsAllTotal']  || 'no'}}</td>
+                <td>{{ XLData["xlInfo"][0]["quota_info"][0]['dataAppsTotal'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["quota_info"][0]['dataTotal'] || 'no' }}</td>
+                <td>{{ XLData["xlInfo"][0]["quota_info"][0]['expiryDate'] || 'no' }}</td>
+              </tr>
+            </table>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </div>
+      <div nz-col [nzSpan]="24" *ngIf="!XLData">
+        <button nz-button nzType="primary" style="width: 100%;height: 50px">
+          {{'authModule.noData' | translate}}
+        </button>
+      </div>
+      <!--运营商 - indosat-->
+      <div nz-col [nzSpan]="24">
+        <h2 style="text-align: center;margin-top: 20px">{{'authModule.indosat.title' | translate}}</h2>
+      </div>
+      <div nz-col [nzSpan]="24" *ngIf="indosatData">
+        <!--用户账户信息-->
+        <nz-collapse [nzBordered]="false" *ngIf="telkomselData['accountInfo']">
+          <nz-collapse-panel [nzHeader]="'authModule.xl.accountInfo.title' | translate" [nzActive]="'true'" >
+            <table>
+              <tr>
+                <td>{{'authModule.indosat.accountInfo.accountId' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.accountType' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.name' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.phone' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.accountExpiryDate' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.balance' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.currentUsage' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.ebillAddress' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.dueDate' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.addressType' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.province' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.city' | translate}}</td>
+                <td>{{'authModule.indosat.accountInfo.postalCode' | translate}}</td>
+              </tr>
+              <tr>
+                <td>{{ indosatData["indosat_info"]["accountId"] || 'no' }}</td>
+                <td>{{ indosatData["indosat_info"]["accountType"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["name"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["phone"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["accountExpiryDate"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["balance"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["currentUsage"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["ebillAddress"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["dueDate"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["addressType"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["province"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["city"] || 'no' }}</td>
+                <td>{{ indosatData["accountInfo"]["postalCode"] || 'no' }}</td>
+              </tr>
+            </table>
+          </nz-collapse-panel>
+        </nz-collapse>
+        <!--套餐信息-->
+        <nz-collapse [nzBordered]="false">
+          <nz-collapse-panel [nzHeader]="'authModule.indosat.accountInfo.quotaInfo' | translate" [nzActive]="'true'" >
+            <!--整体情况-->
+            <nz-collapse [nzBordered]="false">
+              <nz-collapse-panel [nzHeader]="'authModule.indosat.accountInfo.overallInfo' | translate" [nzActive]="'true'" >
+                <table>
+                  <tr>
+                    <td>
+                      {{ 'authModule.indosat.quotaInfo.dataAmount' | translate }} : {{indosatData['accountInfo']['dataAmount'] || 'no'}}
+                    </td>
+                    <td>
+                      {{ 'authModule.indosat.quotaInfo.totalRemainingData' | translate }} : {{indosatData['accountInfo']['totalRemainingData'] || 'no'}}
+                    </td>
+                    <td>
+                      {{ 'authModule.indosat.quotaInfo.totalRemainingSms' | translate }} : {{indosatData['accountInfo']['totalRemainingSms'] || 'no'}}
+                    </td>
+                    <td>
+                      {{ 'authModule.indosat.quotaInfo.totalRemainingVoice' | translate }} : {{indosatData['accountInfo']['totalRemainingVoice'] || 'no'}}
+                    </td>
+                  </tr>
+                </table>
+              </nz-collapse-panel>
+            </nz-collapse>
+            <!--详细情况-->
+            <nz-collapse [nzBordered]="false">
+              <nz-collapse-panel [nzHeader]="'authModule.indosat.accountInfo.details' | translate" [nzActive]="'true'" >
+                <!--通话情况（单位：s）-->
+                <div nz-col [nzSpan]="8">
+                  <table>
+                    <tr>
+                      <td colspan="4">
+                        {{ 'authModule.indosat.quotaInfo.call' | translate }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.callInfo.name' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['name'] || 'no'}}
+                      </td>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.callInfo.expiryDate' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['expiryDate'] || 'no'}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.callInfo.voiceAllTotal' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['voiceAllTotal'] || 'no'}}
+                      </td>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.callInfo.voiceOnlyRemaining' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['voiceOnlyRemaining'] || 'no'}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.callInfo.voiceAllRemaining' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['voiceAllRemaining'] || 'no'}}
+                      </td>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.callInfo.voiceRoamingTotal' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['voiceRoamingTotal'] || 'no'}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.callInfo.voiceOnlyTotal' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['voiceOnlyTotal'] || 'no'}}
+                      </td>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.callInfo.voiceRoamingRemaining' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['voiceRoamingRemaining'] || 'no'}}
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <!--短信情况-->
+                <div nz-col [nzSpan]="8">
+                  <table>
+                    <tr>
+                      <td colspan="2">
+                        {{ 'authModule.indosat.quotaInfo.SMS' | translate }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.SMSInfo.smsOnlyTotal' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['smsOnlyTotal'] || 'no'}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.SMSInfo.smsOnlyRemaining' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['smsOnlyRemaining'] || 'no'}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.SMSInfo.smsAllTotal' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['smsAllTotal'] || 'no'}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.SMSInfo.smsAllRemaining' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['smsAllRemaining'] || 'no'}}
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <!--流量情况（单位：B）-->
+                <div nz-col [nzSpan]="8">
+                  <table>
+                    <tr>
+                      <td colspan="4">
+                        {{ 'authModule.indosat.quotaInfo.flow' | translate }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.flowInfo.dataAppsTotal' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['dataAppsTotal'] || 'no'}}
+                      </td>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.flowInfo.dataAppsRemaining' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['dataAppsRemaining'] || 'no'}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.flowInfo.dataTotal' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['dataTotal'] || 'no'}}
+                      </td>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.flowInfo.dataRemaining' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['dataRemaining'] || 'no'}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.flowInfo.dataMalamTotal' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['dataMalamTotal'] || 'no'}}
+                      </td>
+                      <td>
+                        {{ 'authModule.indosat.quotaInfo.flowInfo.dataMalamRemaining' | translate }}
+                      </td>
+                      <td>
+                        {{indosatData['indosat_info']['quota_info']['dataMalamRemaining'] || 'no'}}
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </nz-collapse-panel>
+            </nz-collapse>
+          </nz-collapse-panel>
+        </nz-collapse>
+        <!--账单详情-->
+        <nz-collapse [nzBordered]="false">
+          <nz-collapse-panel [nzHeader]="'authModule.indosat.quotaInfo.bill' | translate" [nzActive]="'true'" >
+            <table>
+              <tr>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.billDetail.orderDate' | translate }}
+                </td>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.billDetail.dueDate' | translate }}
+                </td>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.billDetail.amount' | translate }}
+                </td>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.billDetail.orderId' | translate }}
+                </td>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.billDetail.billDate' | translate }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{indosatData['indosat_info']['bill_detail']['orderDate'] || 'no'}}
+                </td>
+                <td>
+                  {{indosatData['indosat_info']['bill_detail']['dueDate'] || 'no'}}
+                </td>
+                <td>
+                  {{indosatData['indosat_info']['bill_detail']['amount'] || 'no'}}
+                </td>
+                <td>
+                  {{indosatData['indosat_info']['bill_detail']['orderId'] || 'no'}}
+                </td>
+                <td>
+                  {{indosatData['indosat_info']['bill_detail']['billDate'] || 'no'}}
+                </td>
+              </tr>
+            </table>
+          </nz-collapse-panel>
+        </nz-collapse>
+        <!--支付情况（近6月）-->
+        <nz-collapse [nzBordered]="false">
+          <nz-collapse-panel [nzHeader]="'authModule.indosat.quotaInfo.payment.title' | translate" [nzActive]="'true'" >
+            <table>
+              <tr>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.payment.date' | translate }}
+                </td>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.payment.amount' | translate }}
+                </td>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.payment.method' | translate }}
+                </td>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.payment.orderId' | translate }}
+                </td>
+                <td>
+                  {{ 'authModule.indosat.quotaInfo.payment.orderDate' | translate }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{indosatData['indosat_info']['payment']['date'] || 'no'}}
+                </td>
+                <td>
+                  {{indosatData['indosat_info']['payment']['amount'] || 'no'}}
+                </td>
+                <td>
+                  {{indosatData['indosat_info']['payment']['method'] || 'no'}}
+                </td>
+                <td>
+                  {{indosatData['indosat_info']['payment_detail']['orderId'] || 'no'}}
+                </td>
+                <td>
+                  {{indosatData['indosat_info']['payment_detail']['orderDate'] || 'no'}}
+                </td>
+              </tr>
+            </table>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </div>
+      <div nz-col [nzSpan]="24" *ngIf="!indosatData">
+        <button nz-button nzType="primary" style="width: 100%;height: 50px">
+          {{'authModule.noData' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <nz-collapse [nzBordered]="false" *ngIf="photoInfo">
+    <nz-collapse-panel [nzHeader]=' "orderModule.order.auth.photo.title" | translate '>
+      <div class="card-img-box">
+        <img class="c-img-res img-info" [src]="photoInfo.front" alt="">
+        <img class="c-img-res img-info" [src]="photoInfo.reverse" alt="">
+        <img class="c-img-res img-info" [src]="photoInfo.hand" alt="">
+        <img class="c-img-res img-info" [src]="photoInfo.incomeProof" alt="">
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse> -->
+  <!--<div class="card-img-box" *ngIf="photoInfo">-->
+
+  <!--<div>-->
+  <!--<div style="margin: 0 5px">-->
+  <!--{{ "orderModule.order.auth.photo.front" | translate }}-->
+  <!--</div>-->
+  <!--<img class="c-img-res img-info" [src]="photoInfo.front" alt=""  data-magnify="gallery" [attr.data-src]="photoInfo.front">-->
+  <!--&lt;!&ndash; <img class="c-img-res img-info" [src]="photoInfo.front" alt=""> &ndash;&gt;-->
+  <!--</div>-->
+
+  <!--<div>-->
+  <!--<div style="margin: 0 5px">-->
+  <!--{{ "orderModule.order.auth.photo.back" | translate }}-->
+  <!--</div>-->
+  <!--<img class="c-img-res img-info" [src]="photoInfo.reverse" alt=""  data-magnify="gallery" [attr.data-src]="photoInfo.reverse">-->
+  <!--&lt;!&ndash; <img class="c-img-res img-info" [src]="photoInfo.reverse" alt=""> &ndash;&gt;-->
+  <!--</div>-->
+
+  <!--<div *ngIf="photoInfo.faceCompareButton != 1">-->
+  <!--<div style="margin: 0 5px">-->
+  <!--{{ "orderModule.order.auth.photo.hand" | translate }}-->
+  <!--</div>-->
+  <!--&lt;!&ndash; <img (click) = 'showImg()' data-magnify="gallery" [attr.data-src] = "'/assets/img/table.jpg'" [src]="'/assets/img/table.jpg'"> &ndash;&gt;-->
+  <!--<img class="c-img-res img-info" [src]="photoInfo.hand" alt=""  data-magnify="gallery" [attr.data-src]="photoInfo.hand">-->
+
+  <!--</div>-->
+
+  <!--<div *ngIf="photoInfo.faceCompareButton == 1">-->
+  <!--<div style="margin: 0 5px">-->
+  <!--最佳全景照-->
+  <!--</div>-->
+  <!--&lt;!&ndash; <img (click) = 'showImg()' data-magnify="gallery" [attr.data-src] = "'/assets/img/table.jpg'" [src]="'/assets/img/table.jpg'"> &ndash;&gt;-->
+  <!--<img class="c-img-res img-info" [src]="photoInfo.imageBest" alt=""  data-magnify="gallery" [attr.data-src]="photoInfo.imageBest">-->
+
+  <!--</div>-->
+
+  <!--<div>-->
+  <!--<div style="margin: 0 5px">-->
+  <!--{{ "orderModule.order.auth.photo.income" | translate }}-->
+  <!--</div>-->
+  <!--<img *ngIf="photoInfo.incomeProof" class="c-img-res img-info" [src]="photoInfo.incomeProof" alt=""  data-magnify="gallery" [attr.data-src]="photoInfo.incomeProof">-->
+  <!--<p *ngIf="!photoInfo.incomeProof">no</p>-->
+  <!--&lt;!&ndash; <img class="c-img-res img-info" [src]="photoInfo.incomeProof" alt=""> &ndash;&gt;-->
+  <!--</div>-->
+
+  <!--</div>-->
+  <!--&lt;!&ndash; 位置定位 &ndash;&gt;-->
+  <!--<div class="auth-table-wrap" >-->
+  <!--<p class="th-title">{{ "authModule.userDetailLoginVO.title" | translate }}</p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.userDetailLoginVO.list' | translate)">{{item.name}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf='detailinfo && detailinfo["userDetailLoginVO"]'>-->
+  <!--<td>{{detailinfo.userDetailLoginVO.stringCreateTime}}</td>-->
+  <!--<td>{{"common.Long" | translate}}:{{detailinfo.userDetailLoginVO.longitude === "null" ? "no" : detailinfo.userDetailLoginVO.longitude}}<br>{{"common.Lat" | translate}}:{{detailinfo.userDetailLoginVO.latitude === "null" ? "no" : detailinfo.userDetailLoginVO.latitude}}</td>-->
+  <!--<td>{{detailinfo.userDetailLoginVO.ipAddress}}</td>-->
+  <!--<td>{{detailinfo.userDetailLoginVO.deviceId}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf='!(detailinfo && detailinfo["userDetailLoginVO"])'>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash;  历史信审订单 &ndash;&gt;-->
+  <!--<div class="sectionInfo_Wrap">-->
+  <!--<div class="c-title">-->
+  <!--{{"financeModule.list.table.historyRecordOrder"| translate}}-->
+  <!--</div>-->
+  <!--<c-table [tableData]='recordTableData'>-->
+  <!--</c-table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash;  历史借款订单 &ndash;&gt;-->
+  <!--<div class="sectionInfo_Wrap">-->
+  <!--<div class="c-title">-->
+  <!--{{"financeModule.list.table.historyOrder"| translate}}-->
+  <!--</div>-->
+  <!--<c-table [tableData]='tableData'>-->
+  <!--</c-table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; 征信基本信息对比 &ndash;&gt;-->
+  <!--<div class="auth-table-wrap" *ngIf='detailinfo'>-->
+  <!--<p class="th-title">{{'authModule.userDetailCreditInfoVO.title' | translate}}</p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr>-->
+  <!--<td colspan='2' class="tr-tlt" *ngFor="let item of ('authModule.userDetailCreditInfoVO.list' | translate)">{{item.name}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf="detailinfo['userDetailCreditInfoVO']">-->
+  <!--<td>{{detailinfo.userDetailCreditInfoVO.username || "no"}}</td>-->
+  <!--<td class="spf-info">{{detailinfo.userDetailCreditInfoVO.spcUsername || "no"}}</td>-->
+
+  <!--<td>{{detailinfo.userDetailCreditInfoVO.cpf || "no"}}</td>-->
+  <!--<td class="spf-info">{{detailinfo.userDetailCreditInfoVO.spcCpf || "no"}}</td>-->
+
+  <!--<td>{{ detailinfo.userDetailCreditInfoVO.gender | SexPipe }}</td>-->
+  <!--<td class="spf-info">{{detailinfo.userDetailCreditInfoVO.spcGender || "no"}}</td>-->
+
+  <!--<td>{{detailinfo.userDetailCreditInfoVO.stringBirthday || "no"}}</td>-->
+  <!--<td class="spf-info">{{(detailinfo.userDetailCreditInfoVO.stringSpcBirthday) || "no"}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf="!detailinfo['userDetailCreditInfoVO']">-->
+  <!--<td>no</td>-->
+  <!--<td class="spf-info">no</td>-->
+
+  <!--<td>no</td>-->
+  <!--<td class="spf-info">no</td>-->
+
+  <!--<td>no</td>-->
+  <!--<td class="spf-info">no</td>-->
+
+  <!--<td>no</td>-->
+  <!--<td class="spf-info">no</td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!--<td colspan='2' class="tr-tlt" *ngFor="let item of ('authModule.userDetailCreditInfoVO.list2' | translate)">{{item.name}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf="detailinfo['userDetailCreditInfoVO']">-->
+  <!--<td>{{detailinfo.userDetailCreditInfoVO.age || "no"}}</td>-->
+  <!--<td class="spf-info">{{detailinfo.userDetailCreditInfoVO.spcAge || "no"}}</td>-->
+
+  <!--<td>{{detailinfo.userDetailCreditInfoVO.motherName || "no"}}</td>-->
+  <!--<td class="spf-info">{{detailinfo.userDetailCreditInfoVO.spcMotherName || "no"}}</td>-->
+
+  <!--<td>{{detailinfo.userDetailCreditInfoVO.currentResidential}}&#45;&#45;{{detailinfo.userDetailCreditInfoVO.block}}&#45;&#45;{{detailinfo.userDetailCreditInfoVO.city}}&#45;&#45;{{detailinfo.userDetailCreditInfoVO.state}}</td>-->
+  <!--<td class="spf-info">{{detailinfo.userDetailCreditInfoVO.spcCurrentResidential || "no"}}</td>-->
+
+  <!--<td>{{detailinfo.userDetailCreditInfoVO.residentialPostcode || "no"}}</td>-->
+  <!--<td class="spf-info">{{detailinfo.userDetailCreditInfoVO.spcResidentialPostcode || "no"}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf="!detailinfo['userDetailCreditInfoVO']">-->
+  <!--<td>no</td>-->
+  <!--<td class="spf-info">no</td>-->
+
+  <!--<td>no</td>-->
+  <!--<td class="spf-info">no</td>-->
+
+  <!--<td>no</td>-->
+  <!--<td class="spf-info">no</td>-->
+
+  <!--<td>no</td>-->
+  <!--<td class="spf-info">no</td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; 其他基本信息 &ndash;&gt;-->
+  <!--<div class="auth-table-wrap" *ngIf='detailinfo'>-->
+  <!--<p class="th-title">{{'authModule.userDetailOtherInfoVO.title' | translate}}</p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.userDetailOtherInfoVO.list' | translate)">{{item.name}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf="detailinfo['userDetailOtherInfoVO']">-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.usernameShort || "no"}}</td>-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.fatherName || "no"}}</td>-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.phoneNumber || "no"}}</td>-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.educationBackground | EduPipe}}</td>-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.birthplace || "no"}}</td>-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.homeTelephoneAreaCode }} {{detailinfo.userDetailOtherInfoVO.homeTelephone}}</td>-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.residentialDuration | wellPipe}}</td>-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.maritalStatus | MarryPipe}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf="!detailinfo['userDetailOtherInfoVO']">-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.userDetailOtherInfoVO.list2' | translate)">{{item.name}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf="detailinfo['userDetailOtherInfoVO']">-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.email || "no"}}</td>-->
+  <!--<td>{{detailinfo.userDetailOtherInfoVO.idNumber || "no"}}</td>-->
+  <!--<td style="cursor: pointer;color: blue;" (click)='showImg(0)'  >{{ 'common.clickShow' | translate }}</td>-->
+  <!--<td style="cursor: pointer;color: blue;" (click)='showImg(1)' >{{ 'common.clickShow' | translate }}</td>-->
+  <!--<td style="cursor: pointer;color: blue;" (click)='showImg(2)' >{{ 'common.clickShow' | translate }}</td>-->
+  <!--<td class="spf-info" style="border-right:1px solid  #fff;">{{detailinfo.userDetailOtherInfoVO.voterNumber || "no"}}</td>-->
+  <!--<td class="spf-info" style="border-right:1px solid  #fff;">{{detailinfo.userDetailOtherInfoVO.cpfIssuingAddress || "no"}}</td>-->
+  <!--<td class="spf-info" style="border-right:1px solid  #fff;">{{detailinfo.userDetailOtherInfoVO.stringCpfModificationTime || "no"}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf="!detailinfo['userDetailOtherInfoVO']">-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; 紧急联系人 &ndash;&gt;-->
+  <!--<div class="auth-table-wrap" *ngIf='detailinfo'>-->
+  <!--<p class="th-title">{{'authModule.userDetailContactVOS.title' | translate}}</p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.userDetailContactVOS.list' | translate);index as i">{{ i == 0 ? (item.name + '1') : item.name }}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!--<td></td>-->
+  <!--<td>{{detailinfo && detailinfo["userDetailContactVOS"]["length"] ? (detailinfo.userDetailContactVOS[0].contactName) : "no"}}</td>-->
+  <!--<td>{{detailinfo && detailinfo["userDetailContactVOS"]["length"] ? (detailinfo.userDetailContactVOS[0].relation | RelationPipe) : "no"}}</td>-->
+  <!--<td>{{detailinfo && detailinfo["userDetailContactVOS"]["length"] ? (detailinfo.userDetailContactVOS[0].contactPhone) : "no"}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.userDetailContactVOS.list' | translate);index as i">{{ i == 0 ? (item.name + '2') : item.name }}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!--<td></td>-->
+  <!--<td>{{detailinfo && detailinfo["userDetailContactVOS"]["length"] ? (detailinfo.userDetailContactVOS[1].contactName) : "no"}}</td>-->
+  <!--<td>{{detailinfo && detailinfo["userDetailContactVOS"]["length"] ? (detailinfo.userDetailContactVOS[1].relation | RelationPipe) : "no"}}</td>-->
+  <!--<td>{{detailinfo && detailinfo["userDetailContactVOS"]["length"] ? (detailinfo.userDetailContactVOS[1].contactPhone) : "no"}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.userDetailContactVOS.list' | translate);index as i">{{ i == 0 ? (item.name + '3') : item.name }}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!--<td></td>-->
+  <!--<td>{{detailinfo && detailinfo["userDetailContactVOS"]["length"] ? (detailinfo.userDetailContactVOS[2].contactName) : "no"}}</td>-->
+  <!--<td>{{detailinfo && detailinfo["userDetailContactVOS"]["length"] ? (detailinfo.userDetailContactVOS[2].relation | RelationPipe) : "no"}}</td>-->
+  <!--<td>{{detailinfo && detailinfo["userDetailContactVOS"]["length"] ? (detailinfo.userDetailContactVOS[2].contactPhone) : "no"}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; 工作情况 &ndash;&gt;-->
+  <!--<div class="auth-table-wrap" *ngIf='detailinfo && detailinfo["userDetailWorkVO"]'>-->
+  <!--<p class="th-title">{{'authModule.userDetailWorkVO.title' | translate}}</p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.userDetailWorkVO.list' | translate)">{{item.name}}</td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+  <!--<td></td>-->
+  <!--<td>{{detailinfo.userDetailWorkVO.socialIdentityCode | SocialRolePipe }}</td>-->
+  <!--<td>{{detailinfo.userDetailWorkVO.incomeSourceCode | IncSouPipe }}{{detailinfo.userDetailWorkVO.incomeSourceCode == 6 ? "——" + detailinfo.userDetailWorkVO.otherIncomeSource : "" }}</td>-->
+  <!--<td>{{detailinfo.userDetailWorkVO.monthlyIncome}}</td>-->
+  <!--<td>{{detailinfo.userDetailWorkVO.payrollPaymentTypeCode | PayMoneyPipe}}</td>-->
+  <!--<td>{{detailinfo.userDetailWorkVO.payrollPaymentDate}}</td>-->
+  <!--<td style="cursor: pointer;color: blue;" (click)='showImg(3)' >{{ 'common.clickShow' | translate }}</td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; 借款信息 &ndash;&gt;-->
+  <!--<div class="auth-table-wrap">-->
+  <!--<p class="th-title">{{'authModule.userDetailBorrowInfoVO.title' | translate}}</p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.userDetailBorrowInfoVO.list' | translate)">{{item.name}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf='detailinfo && detailinfo["userDetailBorrowInfoVO"]'>-->
+  <!--<td>{{detailinfo.userDetailBorrowInfoVO.userFor}}</td>-->
+  <!--<td>{{detailinfo.userDetailBorrowInfoVO.applyMoney}}</td>-->
+  <!--<td>{{detailinfo.userDetailBorrowInfoVO.loanDays}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf='!(detailinfo && detailinfo["userDetailBorrowInfoVO"])'>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; 征信违约信息 &ndash;&gt;-->
+  <!--<div class="auth-table-wrap" *ngIf='detailinfo' >-->
+  <!--<p class="th-title">{{'authModule.creditDefaultVOS.title' | translate}}</p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.creditDefaultVOS.list' | translate)">{{item.name}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngFor="let item of detailinfo.creditDefaultVOS">-->
+  <!--<td>{{item.stringDataInclusao}}</td>-->
+  <!--<td>{{item.stringDataVencimento}}</td>-->
+  <!--<td>{{item.contrato}}</td>-->
+  <!--<td>{{item.compradorFiadorAvalista}}</td>-->
+  <!--<td>{{item.valor}}</td>-->
+  <!--<td>{{item.nomeAssociado}}</td>-->
+  <!--<td>{{item.city}}</td>-->
+  <!--<td>{{item.registroInstituicaoFinanceira}}</td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf='!detailinfo["creditDefaultVOS"]["length"]'>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; 征信访问次数 &ndash;&gt;-->
+  <!--<div class="auth-table-wrap" *ngIf='detailinfo'>-->
+  <!--<p class="th-title">{{'authModule.consultaRealizadaVO.title' | translate}}</p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.consultaRealizadaVO.list' | translate)">{{item.name}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr *ngFor="let item of detailinfo.consultaRealizadaVO">-->
+  <!--<td>{{item.stringDataconsulta}}</td>-->
+  <!--<td>{{item.nomeassociado}}</td>-->
+  <!--<td>{{item.city}}</td>-->
+  <!--<td>{{item.nomeentidadeorigem}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf='!detailinfo["consultaRealizadaVO"]["length"]'>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; 征信信用 &ndash;&gt;-->
+  <!--<div class="auth-table-wrap" *ngIf='detailinfo'>-->
+  <!--<p class="th-title">{{'authModule.spcScoreVO.title' | translate}}</p>-->
+  <!--<table>-->
+  <!--<tbody>-->
+  <!--<tr>-->
+  <!--<td class="tr-tlt" *ngFor="let item of ('authModule.spcScoreVO.list' | translate)">{{item.name}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr *ngFor="let item of detailinfo.spcScoreVO">-->
+  <!--<td>{{item.score}}</td>-->
+  <!--<td>{{item.classe}}</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--<tr *ngIf="!detailinfo.spcScoreVO['length']">-->
+  <!--<td>no</td>-->
+  <!--<td>no</td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--<td></td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!-- <div class="address-list-wrap" *ngIf=" isShowCall ">
+    <nz-list [nzDataSource]="friendInfo.callList" nzBordered [nzRenderItem]="item">
+      <ng-template #item let-item>
+        <p class="call-list">
+          <span>{{item.contactName}}</span>
+          <span>{{item.contactPhone}}</span>
+        </p>
+      </ng-template>
+    </nz-list>
+  </div> -->
+
+</div>
+<div class="call-mask" *ngIf=" isShowCall || isBigImg " (click)="hideMask()"></div>

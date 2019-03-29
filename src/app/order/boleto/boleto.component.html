@@ -1,0 +1,20 @@
+<div class="c-content-wrap">
+  <div class="title">
+    {{ "orderModule.boleto.title" | translate }}
+  </div>
+    <div class="c-search-wrap">
+      <div class="c-search-btnGroup">
+        <button nz-button nzType="primary"  (click) = 'getList() '>
+          {{ "orderModule.boleto.add" | translate }}
+        </button>
+      </div>
+      <div class="c-search-group">
+          <div class="c-search-item">
+            {{ "orderModule.boleto.tip" | translate }}
+          </div>
+      </div>
+    </div>
+
+    <c-table [tableData] = 'tableData'>
+    </c-table>
+</div>

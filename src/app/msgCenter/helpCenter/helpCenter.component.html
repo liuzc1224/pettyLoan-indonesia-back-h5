@@ -1,0 +1,121 @@
+<div class="c-content-wrap">
+  <div class="half-block">
+    <div class="title">
+      {{ "msgCenter.helpCenter.title" | translate }}
+      <div class="c-btnGroup">
+        <button nz-button  (click) = 'add() '>
+          {{ "msgCenter.helpCenter.add" | translate }}
+        </button>
+      </div>
+    </div>
+    <div class="c-search-group" style="margin-top: 20px">
+      <div class="c-search-item">
+        <div class="c-search-itemLeft">
+          {{ "msgCenter.helpCenter.createTime" | translate}}:
+        </div>
+        <div class="c-search-itemRight">
+          <nz-date-picker [(ngModel)]="searchModel.startDate"></nz-date-picker>
+          <span style="color:#999"> ~ </span>
+          <nz-date-picker [(ngModel)]="searchModel.endDate"></nz-date-picker>
+        </div>
+      </div>
+      <div class="c-search-item">
+        <div class="c-search-itemLeft">
+          {{ "msgCenter.helpCenter.table.problem" | translate}}:
+        </div>
+        <div class="c-search-itemRight">
+          <input nz-input type="text" [(ngModel)]="searchModel.title" [placeholder]="'msgCenter.helpCenter.prompt.problem' | translate" />
+        </div>
+      </div>
+    </div>
+    <div class="c-btn-group" style="margin-bottom: 20px">
+      <button nz-button  nzType="primary" (click) = 'search() '>
+        {{ "common.search" | translate}}
+      </button>
+      <button nz-button class="left" (click) = 'reset() '>
+        {{ "channel.btn.reset" | translate}}
+      </button>
+    </div>
+  </div>
+  <c-table [tableData] = 'tableData' style="margin-top: 20px">
+  </c-table>
+  <div class="c-pag">
+    <nz-pagination [nzShowTotal]="totalTemplate" (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="searchModel.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+    <ng-template #totalTemplate let-total>
+  <span>
+  {{ "common.total" | translate }}
+  </span>
+      <span>
+  {{ totalSize }}
+  </span>
+      <span>
+  {{ "common.pageUnit" | translate }}
+  </span>
+    </ng-template>
+  </div>
+  <nz-modal [(nzVisible)]="isDelete" [nzTitle]="'common.deleteToast.title' | translate" (nzOnCancel)="deleteCancel()" (nzOnOk)="deleteOk()" [nzOkLoading]="isDeleteLoading">
+    <p>{{"common.deleteToast.tip"  | translate }}！</p>
+  </nz-modal>
+  <nz-modal
+    [(nzVisible)]="isVisible"
+    [nzTitle]='title'
+    [nzOkText]='"common.operate.save" | translate'
+    [nzCancelText]='"common.operate.cancel" | translate'
+    (nzOnOk)="handleOk()"
+    (nzOnCancel)="handleCancel()"
+    [nzOkLoading]="isOkLoading"
+    [nzWidth]="800"
+  >
+    <div class="formChannel">
+      <form nz-form [nzLayout]="'block'" [formGroup]="validForm">
+        <nz-form-item  class='formSec'>
+          <nz-form-label [nzSm]="4" nzRequired nzFor="title">
+            {{ "msgCenter.helpCenter.table.problem" | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="19" [nzOffset]='1'>
+            <input
+              type="text"
+              nz-input
+              formControlName="title"
+              id="title"
+              [placeholder] = '"msgCenter.helpCenter.prompt.problem" | translate'
+            >
+            <nz-form-explain *ngIf="validForm.get('title').dirty && validForm.get('title').errors">
+              <span>
+                {{ "msgCenter.helpCenter.prompt.problem" | translate}}
+              </span>
+              <span>
+                {{ "common.validator.notEmpty" | translate }}
+              </span>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item  class='formSec'>
+          <nz-form-label [nzSm]="4" nzRequired nzFor="content">
+            {{ "msgCenter.helpCenter.table.content" | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="19" [nzOffset]='1'>
+            <textarea
+              nz-input
+              formControlName="content"
+              id="content"
+              [placeholder] = '"msgCenter.helpCenter.prompt.content" | translate'
+              style="resize: none;height: 300px;"
+              maxlength="500"
+            >
+
+            </textarea>
+            <nz-form-explain *ngIf="validForm.get('content').dirty && validForm.get('content').errors">
+              <span>
+                {{ "msgCenter.helpCenter.prompt.content" | translate}}
+              </span>
+              <span>
+                {{ "common.validator.notEmpty" | translate }}
+              </span>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </nz-modal>
+</div>

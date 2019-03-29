@@ -1,0 +1,181 @@
+<div class="c-content-wrap">
+  <div class="half-block">
+    <div class="title">
+      {{ "productCenter.userLevel.title" | translate }}
+      <div class="c-btnGroup">
+        <button nz-button  (click) = 'add() '>
+          {{ "productCenter.userLevel.add" | translate}}
+        </button>
+      </div>
+    </div>
+    <div class="c-search-Group">
+      <nz-select  [(ngModel)]="inputValue">
+        <nz-option *ngFor="let option of inputData;" [nzLabel]="option['desc']" [nzValue]="option['value']"></nz-option>
+      </nz-select>
+      <input nz-input class="left" *ngIf="inputValue==='id'" type="tel" name="tel" [(ngModel)]="searchModel.id"   [placeholder] = '"productCenter.product.prompt" | translate' (keyup)="keyupId()" >
+      <input nz-input class="left" *ngIf="inputValue==='name'" type="text"  [(ngModel)]="searchModel.userLevelName" [placeholder] = '"productCenter.product.prompt" | translate' >
+      <button nz-button class="left" nzType="primary" (click) = 'search() '>
+        {{ "common.search" | translate}}
+      </button>
+      <button nz-button class="left"  nzType="default"  (click) = 'reset()'>
+        {{ "common.reset" | translate}}
+      </button>
+    </div>
+  </div>
+  <c-table [tableData] = 'tableData' style="margin-top: 20px">
+  </c-table>
+  <div class="c-pag">
+    <nz-pagination [nzShowTotal]="totalTemplate" (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="searchModel.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+    <ng-template #totalTemplate let-total>
+  <span>
+  {{ "common.total" | translate }}
+  </span>
+      <span>
+  {{ totalSize }}
+  </span>
+      <span>
+  {{ "common.pageUnit" | translate }}
+  </span>
+    </ng-template>
+  </div>
+
+  <nz-modal [(nzVisible)]="isDelete" [nzTitle]="'common.deleteToast.title' | translate" (nzOnCancel)="deleteCancel()" (nzOnOk)="deleteOk()" [nzOkLoading]="isDeleteLoading">
+    <p>{{"common.deleteToast.tip"  | translate }}！</p>
+  </nz-modal>
+
+
+  <nz-modal
+    [(nzVisible)]="isVisible"
+    [nzTitle]='"productCenter.userLevel.title" | translate'
+    [nzOkText]='"common.setting" | translate'
+    [nzCancelText]='"common.operate.cancel" | translate'
+    (nzOnOk)="handleOk()"
+    (nzOnCancel)="handleCancel()"
+    [nzOkLoading]="isOkLoading"
+    [nzWidth]="800"
+  >
+    <div class="formChannel">
+      <form nz-form [nzLayout]="'block'" [formGroup]="validForm">
+        <nz-form-item class='formSec'>
+            <nz-form-label [nzSm]="6" nzRequired nzFor="userLevelName">
+              {{ "productCenter.userLevel.list.name" | translate}}
+            </nz-form-label>
+            <nz-form-control [nzSm]="17"  [nzOffset]='1'>
+              <input
+                type="text"
+                nz-input
+                formControlName="userLevelName"
+                id="userLevelName"
+                [placeholder] = '"productCenter.userLevel.prompt" | translate'
+
+              >
+            </nz-form-control>
+            <nz-form-explain *ngIf="validForm.get('userLevelName').dirty && validForm.get('userLevelName').errors">
+            </nz-form-explain>
+        </nz-form-item>
+        <nz-form-item class='formSec'>
+            <nz-form-label [nzSm]="6" nzRequired nzFor="loanProductIdList">
+              {{ "productCenter.userLevel.list.product" | translate}}
+            </nz-form-label>
+            <nz-form-control [nzSm]="17"  [nzOffset]='1'>
+              <nz-select
+                nzMode="tags"
+                formControlName="loanProductIdList"
+                [nzPlaceHolder] = '"productCenter.userLevel.prompt" | translate'
+                id="loanProductIdList"
+                >
+                <div *ngIf="crowd!=={}">
+                  <nz-option *ngFor="let key of objectKeys(crowd)" [nzLabel]="crowd[key]" [nzValue]="key"></nz-option>
+                </div>
+              </nz-select>
+            </nz-form-control>
+            <nz-form-explain *ngIf="validForm.get('loanProductIdList').dirty && validForm.get('loanProductIdList').errors">
+            </nz-form-explain>
+        </nz-form-item>
+        <nz-form-item class='formSec'>
+          <nz-form-label [nzSm]="6" nzRequired nzFor="userRule">
+            {{ "productCenter.userLevel.list.state" | translate}}
+          </nz-form-label>
+          <nz-form-control [nzSm]="17"  [nzOffset]='1'>
+            <nz-select formControlName="status" id="status">
+              <nz-option *ngFor="let option of StateData" [nzLabel]="option['desc']" [nzValue]="option['value']"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class='formSec'>
+          <nz-form-control>
+            <h3>
+              {{ "productCenter.userLevel.list.title" | translate}}
+            </h3>
+            <p style="line-height: 30px;text-align: center">
+              <span>{{ "productCenter.userLevel.tips.one" | translate}}</span>
+              <span class="left">{{ "productCenter.userLevel.tips.two" | translate}}</span><br />
+              <span class="left">{{ "productCenter.userLevel.tips.three" | translate}}</span>
+              <span class="left">{{ "productCenter.userLevel.tips.four" | translate}}</span>
+            </p>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class='formSec'>
+          <nz-form-label [nzSm]="6" nzFor="historyOverdueNum">
+            <p nz-checkbox formControlName="hState">
+              {{ "productCenter.userLevel.list.historyOverdueNum" | translate}}
+            </p>
+          </nz-form-label>
+          <nz-form-control [nzSm]="17"  [nzOffset]='1'>
+            <input
+              type="text"
+              nz-input
+              formControlName="historyOverdueNum"
+              id="historyOverdueNum"
+              [placeholder] = '"productCenter.userLevel.prompt" | translate'
+            >
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class='formSec'>
+          <nz-form-label [nzSm]="6" nzFor="lastNormalSettle">
+            <p nz-checkbox formControlName="lState">
+              {{ "productCenter.userLevel.list.lastNormalSettle" | translate}}
+            </p>
+          </nz-form-label>
+          <nz-form-control [nzSm]="17"  [nzOffset]='1'>
+            <nz-select formControlName="lastNormalSettle" id="lastNormalSettle">
+              <nz-option *ngFor="let option of lastNormalSettleData" [nzLabel]="option['desc']" [nzValue]="option['value']"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class='formSec'>
+          <nz-form-label [nzSm]="6" nzFor="telecomScore">
+            <p nz-checkbox formControlName="tState">
+              {{ "productCenter.userLevel.list.telecomScore" | translate}}
+            </p>
+          </nz-form-label>
+          <nz-form-control [nzSm]="17"  [nzOffset]='1'>
+            <input
+              type="text"
+              nz-input
+              formControlName="telecomScore"
+              id="telecomScore"
+              [placeholder] = '"productCenter.userLevel.prompt" | translate'
+            >
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class='formSec'>
+          <nz-form-label [nzSm]="6" nzFor="creditScore">
+            <p nz-checkbox formControlName="cState">
+              {{ "productCenter.userLevel.list.creditScore" | translate}}
+            </p>
+          </nz-form-label>
+          <nz-form-control [nzSm]="17"  [nzOffset]='1'>
+            <input
+              type="text"
+              nz-input
+              formControlName="creditScore"
+              id="creditScore"
+              [placeholder] = '"productCenter.userLevel.prompt" | translate'
+            >
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </nz-modal>
+</div>

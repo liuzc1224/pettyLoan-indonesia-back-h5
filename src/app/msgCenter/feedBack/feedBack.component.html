@@ -1,0 +1,130 @@
+<div class="c-content-wrap">
+  <div class="half-block">
+    <div class="title">
+      {{ "msgCenter.feedBack.title" | translate }}
+    </div>
+    <div class="c-search-group" style="margin-top: 20px">
+      <div class="c-search-item">
+        <div class="c-search-itemLeft">
+          {{ "msgCenter.feedBack.feedbackDate" | translate}}:
+        </div>
+        <div class="c-search-itemRight">
+          <nz-date-picker [(ngModel)]="searchModel.startDate"></nz-date-picker>
+          <span style="color:#999"> ~ </span>
+          <nz-date-picker [(ngModel)]="searchModel.endDate"></nz-date-picker>
+        </div>
+      </div>
+      <div class="c-search-item">
+        <div class="c-search-itemLeft">
+          {{ "msgCenter.feedBack.informationStatus" | translate}}:
+        </div>
+        <div class="c-search-itemRight">
+          <nz-select style="padding-left: 10px;width: 150px"  [(ngModel)]="searchModel.solve" [nzPlaceHolder]=' "msgCenter.feedBack.promptStatus" | translate ' [nzAllowClear]="true">
+            <nz-option *ngFor="let option of 'msgCenter.feedBack.solve' | translate" [nzLabel]="option['desc']" [nzValue]="option['value']"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+    </div>
+    <div class="c-search-group">
+      <div class="c-search-item">
+        <div class="c-search-itemLeft">
+          {{ "msgCenter.feedBack.userAccount" | translate}}:
+        </div>
+        <div class="c-search-itemRight">
+          <input nz-input type="text" [(ngModel)]="searchModel.phoneNumber" [placeholder]="'msgCenter.feedBack.promptAccount' | translate" />
+        </div>
+      </div>
+    </div>
+    <div class="c-btn-group" style="margin-bottom: 20px">
+      <button nz-button  nzType="primary" (click) = 'search() '>
+        {{ "common.search" | translate}}
+      </button>
+      <button nz-button class="left" (click) = 'reset() '>
+        {{ "channel.btn.reset" | translate}}
+      </button>
+    </div>
+  </div>
+  <c-table [tableData] = 'tableData' style="margin-top: 20px">
+  </c-table>
+  <div class="c-pag">
+    <nz-pagination [nzShowTotal]="totalTemplate" (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="searchModel.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+    <ng-template #totalTemplate let-total>
+  <span>
+  {{ "common.total" | translate }}
+  </span>
+      <span>
+  {{ totalSize }}
+  </span>
+      <span>
+  {{ "common.pageUnit" | translate }}
+  </span>
+    </ng-template>
+  </div>
+  <nz-modal
+    [(nzVisible)]="isVisible"
+    [nzTitle]='"msgCenter.feedBack.feedbackInfo" | translate'
+    [nzOkText]='null'
+    [nzCancelText]='"common.operate.cancel" | translate'
+    (nzOnCancel)="handleCancel()"
+    [nzOkLoading]="isOkLoading"
+    [nzWidth]="800"
+  >
+    <div nz-row>
+      <div nz-col [nzSpan]="8" style="text-align: center">
+        <div style="width: 100px;height: 100px;background: #cccccc;margin: 0 auto"></div><br />
+        <p>
+          {{ "msgCenter.feedBack.userAccount" | translate }}
+          <span style="width: 20px">:</span>
+          {{ feedBackInfo['phoneNumber'] ? feedBackInfo['phoneNumber'] : "" }}
+          <button
+            nz-button
+            nzType="primary"
+            style="margin-top: 20px"
+            (click)="userInfo()"
+          >
+            {{ "msgCenter.feedBack.userInfo" | translate}}
+          </button>
+        </p>
+      </div>
+      <div nz-col [nzSpan]="15" [nzOffset]="1">
+        <div nz-row>
+          <div nz-row>
+            <div nz-col [nzSpan]="4" style="font-weight: bolder">
+              {{ "msgCenter.feedBack.feedbackDate" | translate }} :
+            </div>
+            <div nz-col [nzSpan]="19" [nzOffset]="1">
+            {{ feedBackInfo['createTime'] ? dateToString(feedBackInfo['createTime']) : "" }}
+          </div>
+          </div>
+          <div nz-row style="margin-top: 20px">
+            <div nz-col [nzSpan]="4" style="font-weight: bolder">
+              {{ "msgCenter.feedBack.feedbackTopic" | translate }} :
+            </div>
+            <div nz-col [nzSpan]="19" [nzOffset]="1">
+            {{ feedBackInfo['title'] ? feedBackInfo['title'] : "" }}
+          </div>
+          </div>
+          <div nz-row style="margin-top: 20px">
+            <div nz-col [nzSpan]="4" style="font-weight: bolder">
+              {{ "msgCenter.feedBack.feedbackContent" | translate }} :
+            </div>
+            <div nz-col [nzSpan]="19" [nzOffset]="1">
+            {{ feedBackInfo['content'] ? feedBackInfo['content'] : "" }}
+            </div>
+          </div>
+          <div nz-row style="margin-top: 20px">
+            <div nz-col [nzSpan]="19" [nzOffset]="5">
+              <div *ngIf="feedBackInfo['images']">
+                <div *ngFor="let img of feedBackInfo['images']"  style="width: 110px;height:110px;padding: 5px;float: left">
+                  <img [src]="img"  width="100%" height="100%" data-magnify="gallery" [attr.data-src]="img" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </nz-modal>
+  <div class="call-mask" *ngIf=" isShowCall || isBigImg " (click)="hideMask()"></div>
+</div>
